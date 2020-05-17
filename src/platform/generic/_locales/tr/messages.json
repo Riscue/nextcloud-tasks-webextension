@@ -1,0 +1,11 @@
+{
+  "extensionName": {
+    "message": "Nextcloud Görevler"
+  },
+  "extensionDescription": {
+    "message": "Nextcloud Görevler uygulaması için tarayıcı uzantısı"
+  },
+  "browserActionTitle": {
+    "message": "Görevler"
+  }
+}

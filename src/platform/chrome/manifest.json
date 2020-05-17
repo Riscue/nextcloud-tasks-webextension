@@ -1,0 +1,79 @@
+{
+    "manifest_version": 2,
+    "name"            : "__MSG_extensionName__",
+    "version"         : "0.0.1.0",
+    "version_name"    : "0.0.1",
+    "description"     : "__MSG_extensionDescription__",
+    "author"          : "İbrahim Akyel",
+    "default_locale"  : "en",
+    "icons"           : {
+        "16" : "img/icon-16.png",
+        "32" : "img/icon-32.png",
+        "48" : "img/icon-48.png",
+        "96" : "img/icon-96.png",
+        "128": "img/icon-128.png"
+    },
+    "browser_action"  : {
+        "default_icon" : "img/icon-16.png",
+        "default_title": "__MSG_browserActionTitle__",
+        "default_popup": "html/manager.html",
+        "browser_style": true,
+        "theme_icons"  : [
+            {
+                "light": "img/icon-light.svg",
+                "dark" : "img/icon-dark.svg",
+                "size" : 12
+            },
+            {
+                "light": "img/icon-light.svg",
+                "dark" : "img/icon-dark.svg",
+                "size" : 16
+            },
+            {
+                "light": "img/icon-light.svg",
+                "dark" : "img/icon-dark.svg",
+                "size" : 32
+            },
+            {
+                "light": "img/icon-light.svg",
+                "dark" : "img/icon-dark.svg",
+                "size" : 64
+            },
+            {
+                "light": "img/icon-light.svg",
+                "dark" : "img/icon-dark.svg",
+                "size" : 96
+            },
+            {
+                "light": "img/icon-light.svg",
+                "dark" : "img/icon-dark.svg",
+                "size" : 128
+            }
+        ]
+    },
+    "background"      : {
+        "scripts": [
+            "js/chrome-polyfill.js",
+            "js/background.js"
+        ]
+    },
+    "content_scripts" : [
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "js"     : [
+                "js/chrome-polyfill.js",
+                "js/client.js"
+            ]
+        }
+    ],
+    "permissions"     : [
+        "*://*/*",
+        "tabs",
+        "storage",
+        "contextMenus",
+        "notifications"
+    ]
+}

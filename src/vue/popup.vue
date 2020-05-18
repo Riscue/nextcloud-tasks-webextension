@@ -33,7 +33,7 @@
         props: {
             renderLoginForm: {
                 type: Boolean,
-                default: !StorageService.get(StorageService.APP_PASSWORD)
+                default: !UserService.isLoggedIn()
             },
             loginBtnLabel: {default: Browser.getBrowser().i18n.getMessage("loginBtnLabel", null)},
             logoutBtnLabel: {default: Browser.getBrowser().i18n.getMessage("logoutBtnLabel", null)}
@@ -57,12 +57,18 @@
             ApiService.init("https://cloud.riscue.xyz");
         },
         mounted() {
-            this.fetchCalendar();
+            if (UserService.isLoggedIn()) {
+                this.fetchCalendar();
+            }
         },
         methods: {
             login() {
-                UserService.login(this.username, this.password);
-                this.renderLoginForm = false;
+                UserService.login(this.username, this.password).then(() => {
+                    this.renderLoginForm = false;
+                    this.fetchCalendar();
+                }).catch(() =>
+                    alert("Failed!")
+                );
             },
             logout() {
                 UserService.logout();

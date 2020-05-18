@@ -45,6 +45,10 @@ export const UserService = {
         StorageService.clear();
     },
 
+    isLoggedIn() {
+        return !!StorageService.get(StorageService.APP_PASSWORD);
+    },
+
     getCredentials() {
         return {
             username: StorageService.get(StorageService.USERNAME),

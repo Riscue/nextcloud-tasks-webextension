@@ -2,8 +2,8 @@ export const StorageService = {
     USERNAME: 'username',
     APP_PASSWORD: 'apppassword',
 
-    clear(key) {
-        localStorage.clear();
+    clear() {
+        this.remove(StorageService.APP_PASSWORD);
     },
 
     get(key) {

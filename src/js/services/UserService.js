@@ -8,6 +8,7 @@ export const UserService = {
         const requestData = {
             method: 'get',
             url: "/ocs/v2.php/core/getapppassword",
+            headers: {"OCS-APIRequest": true},
             auth: {
                 username: username,
                 password: password
@@ -20,8 +21,6 @@ export const UserService = {
 
             StorageService.save(StorageService.USERNAME, username);
             StorageService.save(StorageService.APP_PASSWORD, apppassword);
-            ApiService.setHeader();
-            ApiService.mount401Interceptor();
 
             return apppassword;
         } catch (error) {
@@ -34,6 +33,7 @@ export const UserService = {
             const requestData = {
                 method: 'delete',
                 url: "/ocs/v2.php/core/apppassword",
+                headers: {"OCS-APIRequest": true},
                 auth: {
                     username: StorageService.get(StorageService.USERNAME),
                     password: StorageService.get(StorageService.APP_PASSWORD)
@@ -43,7 +43,5 @@ export const UserService = {
         } catch (error) {
         }
         StorageService.clear();
-        ApiService.removeHeader();
-        ApiService.unmount401Interceptor();
     }
 };

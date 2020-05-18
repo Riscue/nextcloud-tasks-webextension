@@ -1,7 +1,7 @@
 <template>
     <div id="popup">
         <div v-if="renderLoginForm">
-            <input type="text" id="username" v-model="username" v-on:change="$emit('update',username)">
+            <input type="text" id="username" v-model="username">
             <input type="password" id="password" v-model="password">
             <button type="button" id="login" @click="login()">{{loginBtnLabel}}</button>
         </div>
@@ -55,24 +55,7 @@
                 UserService.logout();
                 this.renderLoginForm = true;
             },
-            async getMethod() {
-                const dav = require('dav');
-                var xhr = new dav.transport.Basic(
-                    new dav.Credentials({
-                        username: StorageService.get(StorageService.USERNAME),
-                        password: StorageService.get(StorageService.APP_PASSWORD)
-                    })
-                );
-
-                var client = new dav.Client(xhr);
-                client.createAccount({
-                    server: `https://cloud.riscue.xyz/remote.php/dav`,
-                    accountType: 'caldav'
-                }).then(function (account) {
-                    account.calendars.forEach(function (addressBook) {
-                        console.log('Found address book name ' + addressBook.displayName);
-                    });
-                });
+            getMethod() {
             }
         }
     };

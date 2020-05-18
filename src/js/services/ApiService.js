@@ -1,5 +1,4 @@
 import axios from 'axios'
-import {StorageService} from './StorageService'
 
 export const ApiService = {
 
@@ -9,7 +8,17 @@ export const ApiService = {
         axios.defaults.baseURL = baseURL;
     },
 
+    propfind(url, data, credentials, config) {
+        config = config || {};
+        config.method = "PROPFIND";
+        config.url = url;
+        config.data = data;
+        config.auth = credentials || undefined;
+
+        return axios.request(config);
+    },
+
     customRequest(data) {
-        return axios(data)
+        return axios.request(data);
     }
 };

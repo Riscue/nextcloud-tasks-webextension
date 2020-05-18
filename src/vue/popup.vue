@@ -6,9 +6,17 @@
             <button type="button" id="login" @click="login()">{{loginBtnLabel}}</button>
         </div>
         <div v-if="!renderLoginForm">
-            <label>{{username}}</label>
-            <button @click="logout()">{{logoutBtnLabel}}</button>
-            <button @click="getMethod()">Send Get Request</button>
+            <center>
+                <button @click="logout()">{{logoutBtnLabel}}</button>
+                <br>
+                <label>Username: {{username}}</label>
+                <br>
+                <label>Calendar Url: {{calendarData.href}}</label>
+                <br>
+                <label>Calendar Name: {{calendarData.displayName}}</label>
+                <br>
+                <label>Calendar Ctag: {{calendarData.getCtag}}</label>
+            </center>
         </div>
     </div>
 </template>
@@ -18,6 +26,7 @@
     import {ApiService} from "@js/services/ApiService";
     import {UserService} from "@js/services/UserService";
     import {StorageService} from "@js/services/StorageService";
+    import {DavService} from "@js/services/DavService";
 
     export default {
         el: '#vue-container',
@@ -33,6 +42,7 @@
             return {
                 username: StorageService.get(StorageService.USERNAME),
                 password: "",
+                calendarData: {}
             }
         },
         watch: {
@@ -46,6 +56,9 @@
         created() {
             ApiService.init("https://cloud.riscue.xyz");
         },
+        mounted() {
+            this.fetchCalendar();
+        },
         methods: {
             login() {
                 UserService.login(this.username, this.password);
@@ -55,7 +68,14 @@
                 UserService.logout();
                 this.renderLoginForm = true;
             },
-            getMethod() {
+            fetchCalendar() {
+                DavService.discover().then(
+                    principal => DavService.calendarHomeSet(principal).then(
+                        calendarHome => DavService.calendarData(calendarHome).then(
+                            result => this.calendarData = result
+                        )
+                    )
+                );
             }
         }
     };

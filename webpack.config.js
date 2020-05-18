@@ -37,7 +37,7 @@ module.exports = (env) => {
 
     return {
         mode   : production ? 'production' : 'development',
-        devtool: 'inline-source-map',
+        devtool: production ? 'none' : 'inline-source-map',
         entry  : {
             client    : `${__dirname}/src/js/client.js`,
             popup     : `${__dirname}/src/js/popup.js`,

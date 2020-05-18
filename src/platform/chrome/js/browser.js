@@ -8,18 +8,14 @@ export class Browser {
     }
 
     static async getBrowserInfo() {
-        let parser = new UaParser(navigator.userAgent),
-            app = parser.getBrowser(),
-            os = await Browser.getBrowser().runtime.getPlatformInfo(),
-            device = os.os === 'android' ? 'mobile' : 'desktop';
-
+        const browserInfo = new UaParser(navigator.userAgent).getBrowser();
+        const platformInfo = (await Browser.getBrowser().runtime.getPlatformInfo());
         return {
-            device,
-            os: os.os,
-            arch: os.arch,
-            name: app.name,
-            vendor: 'Google',
-            version: app.version
+            name: browserInfo.name,
+            version: browserInfo.version,
+            os: platformInfo.os,
+            arch: platformInfo.arch,
+            vendor: 'Google'
         };
     }
 }

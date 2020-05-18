@@ -43,5 +43,12 @@ export const UserService = {
         } catch (error) {
         }
         StorageService.clear();
+    },
+
+    getCredentials() {
+        return {
+            username: StorageService.get(StorageService.USERNAME),
+            password: StorageService.get(StorageService.APP_PASSWORD)
+        };
     }
 };

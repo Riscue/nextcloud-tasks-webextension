@@ -3,8 +3,7 @@ let webpack              = require('webpack'),
     CopyWebpackPlugin    = require('copy-webpack-plugin'),
     {CleanWebpackPlugin} = require('clean-webpack-plugin'),
     VueLoaderPlugin      = require('vue-loader/lib/plugin'),
-    MiniCssExtractPlugin = require('mini-css-extract-plugin'),
-    OptimizeCSSPlugin    = require('optimize-css-assets-webpack-plugin');
+    MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = (env) => {
     let production = env.production === true,
@@ -25,8 +24,8 @@ module.exports = (env) => {
             }
         ),
         new VueLoaderPlugin(),
-        new CopyWebpackPlugin(['src/platform/generic', 'src/platform/' + platform]),
-        new MiniCssExtractPlugin({filename: 'css/main.css'}),
+        new CopyWebpackPlugin([`src/platform/generic`, `src/platform/${platform}`]),
+        new MiniCssExtractPlugin({filename: 'css/[name].css'}),
         new CleanWebpackPlugin(
             {
                 cleanStaleWebpackAssets     : false,
@@ -36,32 +35,28 @@ module.exports = (env) => {
         ),
     ];
 
-    if(env.production) {
-        plugins.push(
-        );
-    }
-
     return {
-        mode   : production ? 'production':'development',
-        devtool: 'none',
+        mode   : production ? 'production' : 'development',
+        devtool: 'inline-source-map',
         entry  : {
-            app       : __dirname + '/src/js/app.js',
-            client    : __dirname + '/src/js/client.js',
-            background: __dirname + '/src/js/background.js'
+            client    : `${__dirname}/src/js/client.js`,
+            popup     : `${__dirname}/src/js/popup.js`,
+            options   : `${__dirname}/src/js/options.js`,
+            background: `${__dirname}/src/js/background.js`,
         },
         output : {
-            path      : __dirname + '/dist/',
+            path      : `${__dirname}/dist/`,
             filename  : "js/[name].js"
         },
         resolve: {
             modules   : ['node_modules', 'src'],
             extensions: ['.js', '.vue', '.json'],
             alias     : {
-                '@vue'           : `${__dirname}/src/vue`,
-                '@js'            : `${__dirname}/src/js`,
-                '@js/Platform'   : `${__dirname}/src/platform/${platform}/js`,
-                '@scss'          : `${__dirname}/src/scss`,
-                '@scss/Platform' : `${__dirname}/src/platform/${platform}/scss`
+                '@vue'  : `${__dirname}/src/vue`,
+                '@js'   : `${__dirname}/src/js`,
+                '@jsP'  : `${__dirname}/src/platform/${platform}/js`,
+                '@scss' : `${__dirname}/src/scss`,
+                '@scssP': `${__dirname}/src/platform/${platform}/scss`
             }
         },
         module : {

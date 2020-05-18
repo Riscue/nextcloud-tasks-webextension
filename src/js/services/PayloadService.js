@@ -19,5 +19,18 @@ export const PayloadService = {
                         '        <cs:getctag />\n' +
                         '        <cal:supported-calendar-component-set />\n' +
                         '    </d:prop>\n' +
-                        '</d:propfind>'
+                        '</d:propfind>',
+
+    downloadCalendar:   '<cal:calendar-query xmlns:d="DAV:" xmlns:cal="urn:ietf:params:xml:ns:caldav">\n' +
+                        '    <d:prop>\n' +
+                        '        <d:getetag />\n' +
+                        '        <cal:calendar-data />\n' +
+                        '    </d:prop>\n' +
+                        '    <cal:filter>\n'+
+                        '        <cal:comp-filter name="VCALENDAR">\n'+
+                        '            <cal:comp-filter name="VTODO">\n'+
+                        '            </cal:comp-filter>\n'+
+                        '        </cal:comp-filter>\n'+
+                        '    </cal:filter>\n'+
+                        '</cal:calendar-query>',
 };

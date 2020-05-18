@@ -43,7 +43,8 @@
             return {
                 username: StorageService.get(StorageService.USERNAME),
                 password: "",
-                calendarData: {}
+                calendarData: {},
+                calendarItems: []
             }
         },
         watch: {
@@ -80,6 +81,9 @@
                     PromiseService.bind(this).then(DavService.calendarHomeSet(principal), calendarHome => {
                         PromiseService.bind(this).then(DavService.calendarData(calendarHome), result => {
                             this.calendarData = result;
+                            PromiseService.bind(this).then(DavService.downloadCalendar(this.calendarData.href), calendarItems => {
+                                this.calendarItems = calendarItems;
+                            });
                         });
                     });
                 });

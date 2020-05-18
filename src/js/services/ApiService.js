@@ -14,6 +14,14 @@ export const ApiService = {
         return axios.request(config);
     },
 
+    report(url, data, credentials, config = {}) {
+        config.method = "REPORT";
+        config.url = url;
+        config.data = data;
+        config.auth = credentials;
+        return axios.request(config);
+    },
+
     get(url, credentials, config = {}) {
         config.auth = credentials;
         return axios.get(url, config);

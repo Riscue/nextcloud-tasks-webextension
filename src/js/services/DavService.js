@@ -3,7 +3,6 @@ import {ApiService} from "@js/services/ApiService";
 import {UserService} from "@js/services/UserService";
 import {PayloadService} from "@js/services/PayloadService";
 import {SelectorService} from "@js/services/SelectorService";
-import {HeaderService} from "@js/services/HeaderService";
 
 export const DavService = {
     payloads: PayloadService,
@@ -14,7 +13,7 @@ export const DavService = {
             ApiService.propfind(
                 `/.well-known/caldav`,
                 this.payloads.discover, UserService.getCredentials(),
-                {headers: HeaderService.depth(0).build()}
+                {headers: {"depth": 0}}
             );
         return jQuery(response.data).find(this.selectors.discover).text().trim();
     },
@@ -24,7 +23,7 @@ export const DavService = {
             ApiService.propfind(
                 principal,
                 this.payloads.calendarHomeSet, UserService.getCredentials(),
-                {headers: HeaderService.depth(0).build()}
+                {headers: {"depth": 0}}
             );
 
         return jQuery(response.data).find(this.selectors.calendarHomeSet).text().trim();
@@ -35,7 +34,7 @@ export const DavService = {
             ApiService.propfind(
                 calendarHome,
                 this.payloads.calendarData, UserService.getCredentials(),
-                {headers: HeaderService.depth(1).build()}
+                {headers: {"depth": 1}}
             );
 
         const calendarResponse = jQuery(response.data).find(this.selectors.calendarData).parent().parent().parent().parent().parent();

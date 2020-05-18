@@ -27,6 +27,7 @@
     import {UserService} from "@js/services/UserService";
     import {StorageService} from "@js/services/StorageService";
     import {DavService} from "@js/services/DavService";
+    import {PromiseService} from "@js/services/PromiseService";
 
     export default {
         el: '#vue-container',
@@ -38,7 +39,7 @@
             loginBtnLabel: {default: Browser.getBrowser().i18n.getMessage("loginBtnLabel", null)},
             logoutBtnLabel: {default: Browser.getBrowser().i18n.getMessage("logoutBtnLabel", null)}
         },
-        data() {
+        data: function () {
             return {
                 username: StorageService.get(StorageService.USERNAME),
                 password: "",
@@ -53,35 +54,35 @@
                 this.password = password;
             },
         },
-        created() {
+        created: function () {
             ApiService.init("https://cloud.riscue.xyz");
         },
-        mounted() {
+        mounted: function () {
             if (UserService.isLoggedIn()) {
                 this.fetchCalendar();
             }
         },
         methods: {
-            login() {
-                UserService.login(this.username, this.password).then(() => {
+            login: function () {
+                PromiseService.bind(this).then(UserService.login(this.username, this.password), () => {
                     this.renderLoginForm = false;
                     this.fetchCalendar();
-                }).catch(() =>
-                    alert("Failed!")
-                );
+                });
             },
-            logout() {
-                UserService.logout();
-                this.renderLoginForm = true;
+            logout: function () {
+                PromiseService.bind(this).then(UserService.logout(), () => {
+                    this.renderLoginForm = true;
+                    this.calendarData = {};
+                });
             },
-            fetchCalendar() {
-                DavService.discover().then(
-                    principal => DavService.calendarHomeSet(principal).then(
-                        calendarHome => DavService.calendarData(calendarHome).then(
-                            result => this.calendarData = result
-                        )
-                    )
-                );
+            fetchCalendar: function () {
+                PromiseService.bind(this).then(DavService.discover(), principal => {
+                    PromiseService.bind(this).then(DavService.calendarHomeSet(principal), calendarHome => {
+                        PromiseService.bind(this).then(DavService.calendarData(calendarHome), result => {
+                            this.calendarData = result;
+                        });
+                    });
+                });
             }
         }
     };

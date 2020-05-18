@@ -16,7 +16,7 @@
     "browser_action"  : {
         "default_icon" : "img/icon-16.png",
         "default_title": "__MSG_browserActionTitle__",
-        "default_popup": "html/manager.html",
+        "default_popup": "html/popup.html",
         "browser_style": true,
         "theme_icons"  : [
             {
@@ -53,10 +53,13 @@
     },
     "background"      : {
         "scripts": [
-            "js/chrome-polyfill.js",
             "js/background.js"
         ]
     },
+    "options_ui": {
+        "page": "html/options.html"
+    },
+    "content_security_policy": "script-src 'self' 'wasm-eval'; object-src 'self'",
     "content_scripts" : [
         {
             "matches": [
@@ -64,7 +67,6 @@
                 "https://*/*"
             ],
             "js"     : [
-                "js/chrome-polyfill.js",
                 "js/client.js"
             ]
         }

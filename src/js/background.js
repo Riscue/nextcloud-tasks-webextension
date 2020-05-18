@@ -1,9 +1,6 @@
-let isChrome = !browser.runtime.getBrowserInfo;
+import {Browser} from '@jsP/browser'
 
-if (isChrome) {
-    browser = chrome;
-}
-
+const browser = Browser.getBrowser();
 browser.runtime.onMessage.addListener(processMessage);
 
 function processMessage(msg, sender, sendResponse) {

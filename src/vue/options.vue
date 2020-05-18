@@ -1,17 +1,15 @@
 <template>
-    <div id="app">
-        {{msg}}
+    <div id="options">
+        Options page
     </div>
 </template>
 
 <script>
     export default {
-        el: '#app',
+        el: '#vue-container',
         props: {},
         data() {
-            return {
-                msg: browser.i18n.getMessage("extensionName", null)
-            }
+            return {}
         }
     };
 </script>

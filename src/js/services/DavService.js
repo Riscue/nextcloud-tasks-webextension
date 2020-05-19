@@ -50,7 +50,7 @@ export const DavService = {
         const response = {
             href: calendarResponse.find(this.selectors.CalendarDataHref).text(),
             displayName: calendarResponse.find(this.selectors.CalendarDataDisplayName).text(),
-            getCtag: calendarResponse.find(this.selectors.CalendarDataGetCtag).text()
+            CTag: calendarResponse.find(this.selectors.CalendarDataGetCtag).text()
         };
         console.log(response);
         return response;

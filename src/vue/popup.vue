@@ -58,6 +58,7 @@
         },
         created: function () {
             ApiService.init("https://cloud.riscue.xyz");
+            Browser.getBrowserInfo().then(console.log);
         },
         mounted: function () {
             if (UserService.isLoggedIn()) {

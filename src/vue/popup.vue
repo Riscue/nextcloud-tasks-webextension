@@ -11,11 +11,12 @@
                 <br>
                 <label>Username: {{username}}</label>
                 <br>
-                <label>Calendar Url: {{calendarData.href}}</label>
-                <br>
                 <label>Calendar Name: {{calendarData.displayName}}</label>
-                <br>
-                <label>Calendar Ctag: {{calendarData.getCtag}}</label>
+                <ul id="example-1">
+                    <li v-for="calendarItem in calendarItems" :key="calendarItem.ics.uuid">
+                        {{ calendarItem.ics.name }}
+                    </li>
+                </ul>
             </center>
         </div>
     </div>

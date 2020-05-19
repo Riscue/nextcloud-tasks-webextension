@@ -1,3 +1,4 @@
+/* eslint-disable */
 let webpack              = require('webpack'),
     config               = require('./package.json'),
     CopyWebpackPlugin    = require('copy-webpack-plugin'),

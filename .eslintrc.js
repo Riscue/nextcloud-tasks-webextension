@@ -1,4 +1,5 @@
-const OFF = 0, WARN = 1, ERROR = 2;
+const OFF = 0, WARN = 1, ERROR = 2,
+    NEVER = 'never', ALWAYS = 'always';
 
 module.exports = exports = {
     'env': {
@@ -13,20 +14,34 @@ module.exports = exports = {
 
     'extends': [
         'plugin:vue/recommended',
-        'standard'
+        'eslint:recommended'
     ],
 
     'rules': {
         'generator-star-spacing': [ERROR, 'before'],
-        'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-        'indent': [WARN, 4, {'SwitchCase': 1}],
-        'padded-blocks': [WARN, 'never'],
-        'semi': [ERROR, 'always'],
-        'vue/max-attributes-per-line': 'off',
-        'vue/singleline-html-element-content-newline': 'off',
+        'no-alert': process.env.NODE_ENV === 'production' ? ERROR : OFF,
+        'no-console': process.env.NODE_ENV === 'production' ? ERROR : OFF,
+        'no-debugger': process.env.NODE_ENV === 'production' ? ERROR : OFF,
+        'indent': [WARN, 4, {
+            'SwitchCase': 1
+        }],
+        'padded-blocks': [WARN, {
+            'blocks': NEVER,
+            'classes': ALWAYS,
+            'switches': NEVER
+        }],
+        'semi': [ERROR, ALWAYS],
+        'vue/max-attributes-per-line': OFF,
+        'vue/singleline-html-element-content-newline': OFF,
+        'vue/html-indent': [WARN, 4],
+        'vue/script-indent': [WARN, 4, {
+            'baseIndent': 0,
+            'switchCase': 1,
+            'ignores': []
+        }],
         'quotes': [WARN, 'single'],
-        'object-curly-spacing': [WARN, 'never'],
-        'space-before-function-paren': [WARN, 'always'],
+        'object-curly-spacing': [WARN, NEVER],
+        'space-before-function-paren': [WARN, ALWAYS],
 
         'no-extra-parens': ERROR,
         'no-unexpected-multiline': ERROR,
@@ -43,7 +58,6 @@ module.exports = exports = {
         'dot-notation': WARN,
         'eqeqeq': [ERROR, 'smart'],
         'guard-for-in': WARN,
-        'no-alert': ERROR,
         'no-caller': ERROR,
         'no-case-declarations': WARN,
         'no-div-regex': WARN,
@@ -95,9 +109,9 @@ module.exports = exports = {
         'wrap-iife': [ERROR, 'outside'],
         'yoda': ERROR,
 
-        'strict': [ERROR, 'never'],
+        'strict': [ERROR, NEVER],
 
-        'init-declarations': [ERROR, 'always'],
+        'init-declarations': [ERROR, ALWAYS],
         'no-catch-shadow': WARN,
         'no-delete-var': ERROR,
         'no-label-var': ERROR,
@@ -119,8 +133,8 @@ module.exports = exports = {
         'no-restricted-modules': OFF,
         'no-sync': WARN,
 
-        'arrow-body-style': [ERROR, 'always'],
-        'arrow-parens': [ERROR, 'always'],
+        'arrow-body-style': OFF,
+        'arrow-parens': [ERROR, ALWAYS],
         'arrow-spacing': [ERROR, {
             'before': true,
             'after': true
@@ -133,14 +147,14 @@ module.exports = exports = {
         'no-dupe-class-members': ERROR,
         'no-this-before-super': ERROR,
         'no-var': WARN,
-        'object-shorthand': [WARN, 'never'],
+        'object-shorthand': [WARN, NEVER],
         'prefer-arrow-callback': WARN,
         'prefer-spread': WARN,
         'prefer-template': WARN,
         'require-yield': ERROR,
 
-        'array-bracket-spacing': [WARN, 'never'],
-        'block-spacing': [WARN, 'always'],
+        'array-bracket-spacing': [WARN, NEVER],
+        'block-spacing': [WARN, ALWAYS],
         'brace-style': [WARN, '1tbs', {'allowSingleLine': false}],
         'camelcase': WARN,
         'comma-spacing': [WARN, {
@@ -148,10 +162,10 @@ module.exports = exports = {
             'after': true
         }],
         'comma-style': [WARN, 'last'],
-        'computed-property-spacing': [WARN, 'never'],
+        'computed-property-spacing': [WARN, NEVER],
         'consistent-this': [WARN, 'self'],
-        'eol-last': [WARN, 'always'],
-        'func-names': WARN,
+        'eol-last': [WARN, ALWAYS],
+        'func-names': OFF,
         'func-style': [WARN, 'declaration'],
         'id-length': [WARN, {
             'min': 2,
@@ -183,7 +197,7 @@ module.exports = exports = {
         'no-underscore-dangle': WARN,
         'no-unneeded-ternary': WARN,
         'one-var': OFF,
-        'operator-assignment': [WARN, 'never'],
+        'operator-assignment': [WARN, NEVER],
         'operator-linebreak': [WARN, 'after'],
         'quote-props': [WARN, 'consistent-as-needed'],
         'semi-spacing': [WARN, {
@@ -191,14 +205,14 @@ module.exports = exports = {
             'after': true
         }],
         'sort-vars': OFF,
-        // 'space-after-keywords': [WARN, 'always'],
-        'space-before-blocks': [WARN, 'always'],
-        // 'space-before-keywords': [WARN, 'always'],
-        'space-in-parens': [WARN, 'never'],
+        // 'space-after-keywords': [WARN, ALWAYS],
+        'space-before-blocks': [WARN, ALWAYS],
+        // 'space-before-keywords': [WARN, ALWAYS],
+        'space-in-parens': [WARN, NEVER],
         'space-infix-ops': [WARN, {'int32Hint': true}],
         'keyword-spacing': ERROR,
         'space-unary-ops': ERROR,
-        'spaced-comment': [WARN, 'always'],
+        'spaced-comment': [WARN, ALWAYS],
         'wrap-regex': WARN
     },
 

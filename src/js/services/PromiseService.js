@@ -1,26 +1,26 @@
 export const PromiseService = {
     that: undefined,
 
-    bind(that) {
+    bind: function (that) {
         this.that = that;
         return this;
     },
 
-    then(promise, successFn, errorFn) {
+    then: function (promise, successFn, errorFn) {
         promise
-            .then(response => {
+            .then((response) => {
                 successFn.call(this.that, response);
             })
-            .catch(err => {
+            .catch((err) => {
                 if (errorFn) {
                     errorFn.call(this.that, err);
                 } else {
-                    this.errorFn.call(this, err);
+                    this.errorFn(err);
                 }
             });
     },
 
-    errorFn(err) {
+    errorFn: function (err) {
         alert(err);
     }
 };

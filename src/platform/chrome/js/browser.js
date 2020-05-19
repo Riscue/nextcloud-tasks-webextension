@@ -3,13 +3,13 @@ import UaParser from 'ua-parser-js';
 
 export class BrowserApi {
 
-    static getBrowserApi() {
+    static getBrowserApi () {
         return polyfill;
     }
 
-    static async getBrowserInfo() {
+    static async getBrowserInfo () {
         const browserInfo = new UaParser(navigator.userAgent).getBrowser();
-        const platformInfo = (await BrowserApi.getBrowserApi().runtime.getPlatformInfo());
+        const platformInfo = await BrowserApi.getBrowserApi().runtime.getPlatformInfo();
         return {
             name: browserInfo.name,
             version: browserInfo.version,
@@ -18,4 +18,5 @@ export class BrowserApi {
             vendor: navigator.vendor
         };
     }
+
 }

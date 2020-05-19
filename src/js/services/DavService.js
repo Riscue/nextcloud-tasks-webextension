@@ -1,5 +1,5 @@
 import * as jQuery from "jquery";
-import * as parseICS from "ics-parser";
+import * as parseICS from "@js/services/ICSService";
 import {ApiService} from "@js/services/ApiService";
 import {UserService} from "@js/services/UserService";
 import {PayloadService} from "@js/services/PayloadService";

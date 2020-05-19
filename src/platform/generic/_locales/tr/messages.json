@@ -8,10 +8,7 @@
   "browserActionTitle": {
     "message": "Görevler"
   },
-  "loginBtnLabel": {
-    "message": "Giriş Yap"
-  },
-  "logoutBtnLabel": {
-    "message": "Çıkış Yap"
+  "openSettingsWindowButton": {
+    "message": "Ayarları Aç"
   }
 }

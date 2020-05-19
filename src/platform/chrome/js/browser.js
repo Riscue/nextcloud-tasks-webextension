@@ -1,15 +1,15 @@
 import polyfill from 'webextension-polyfill';
 import UaParser from 'ua-parser-js';
 
-export class Browser {
+export class BrowserApi {
 
-    static getBrowser() {
+    static getBrowserApi() {
         return polyfill;
     }
 
     static async getBrowserInfo() {
         const browserInfo = new UaParser(navigator.userAgent).getBrowser();
-        const platformInfo = (await Browser.getBrowser().runtime.getPlatformInfo());
+        const platformInfo = (await BrowserApi.getBrowserApi().runtime.getPlatformInfo());
         return {
             name: browserInfo.name,
             version: browserInfo.version,

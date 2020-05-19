@@ -1,6 +1,6 @@
-import {Browser} from '@jsP/browser'
+import {BrowserApi} from '@jsP/browser'
 
-const browser = Browser.getBrowser();
+const browser = BrowserApi.getBrowserApi();
 browser.runtime.onMessage.addListener(processMessage);
 
 function processMessage(msg, sender, sendResponse) {

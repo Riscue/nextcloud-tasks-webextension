@@ -1,14 +1,10 @@
 <template>
     <div id="popup">
+        <button type="button" id="openSetting" @click="openSettings()">{{OpenSettingsWindowButton}}</button>
         <div v-if="renderLoginForm">
-            <input type="text" id="username" v-model="username">
-            <input type="password" id="password" v-model="password">
-            <button type="button" id="login" @click="login()">{{loginBtnLabel}}</button>
         </div>
         <div v-if="!renderLoginForm">
             <center>
-                <button @click="logout()">{{logoutBtnLabel}}</button>
-                <br>
                 <label>Username: {{username}}</label>
                 <br>
                 <label>Calendar Name: {{calendarData.displayName}}</label>
@@ -23,7 +19,7 @@
 </template>
 
 <script>
-    import {Browser} from "@jsP/browser";
+    import {BrowserApi} from "@jsP/browser";
     import {ApiService} from "@js/services/ApiService";
     import {UserService} from "@js/services/UserService";
     import {StorageService} from "@js/services/StorageService";
@@ -37,8 +33,7 @@
                 type: Boolean,
                 default: !UserService.isLoggedIn()
             },
-            loginBtnLabel: {default: Browser.getBrowser().i18n.getMessage("loginBtnLabel", null)},
-            logoutBtnLabel: {default: Browser.getBrowser().i18n.getMessage("logoutBtnLabel", null)}
+            OpenSettingsWindowButton: {default: BrowserApi.getBrowserApi().i18n.getMessage("OpenSettingsWindowButton", null)},
         },
         data: function () {
             return {
@@ -58,7 +53,7 @@
         },
         created: function () {
             ApiService.init("https://cloud.riscue.xyz");
-            Browser.getBrowserInfo().then(console.log);
+            BrowserApi.getBrowserInfo().then(console.log);
         },
         mounted: function () {
             if (UserService.isLoggedIn()) {
@@ -66,17 +61,9 @@
             }
         },
         methods: {
-            login: function () {
-                PromiseService.bind(this).then(UserService.login(this.username, this.password), () => {
-                    this.renderLoginForm = false;
-                    this.fetchCalendar();
-                });
-            },
-            logout: function () {
-                PromiseService.bind(this).then(UserService.logout(), () => {
-                    this.renderLoginForm = true;
-                    this.calendarData = {};
-                });
+            openSettings: function () {
+                BrowserApi.getBrowserApi().runtime.openOptionsPage();
+                window.close();
             },
             fetchCalendar: function () {
                 PromiseService.bind(this).then(DavService.discover(), principal => {

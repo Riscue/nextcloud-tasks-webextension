@@ -1,5 +1,7 @@
 'use strict';
 
+import {RRule} from "rrule";
+
 function generateDateFunction(name) {
     return function (value, params, events, lastEvent) {
         const matches = /^(\d{4})(\d{2})(\d{2})$/.exec(value);
@@ -25,7 +27,7 @@ function generateSimpleParamFunction(name) {
 const objects = {
     'BEGIN': function objectBegin(value, params, events, lastEvent) {
         if (value === "VCALENDAR") {
-            return null;
+            return {};
         }
 
         lastEvent = {
@@ -49,7 +51,7 @@ const objects = {
         }
 
         if (events.length === 0) {
-            lastEvent = null;
+            lastEvent = {};
         }
         else {
             lastEvent = events[events.length - 1];
@@ -63,12 +65,25 @@ const objects = {
     'DTSTAMP': generateDateFunction('end'),
     'COMPLETED': generateDateFunction('completed'),
     'DUE': generateDateFunction('due'),
+    'CREATED': generateDateFunction('created'),
+    'LAST-MODIFIED': generateDateFunction('lastModification'),
 
     'UID': generateSimpleParamFunction('uid'),
     'SUMMARY': generateSimpleParamFunction('name'),
     'DESCRIPTION': generateSimpleParamFunction('description'),
     'LOCATION': generateSimpleParamFunction('location'),
     'URL': generateSimpleParamFunction('url'),
+    'RELATED-TO': generateSimpleParamFunction('relatedTo'),
+    'PRIORITY': generateSimpleParamFunction('priority'),
+    'PERCENT-COMPLETE': generateSimpleParamFunction('percentComplete'),
+    'STATUS': generateSimpleParamFunction('status'),
+    'SEQUENCE': generateSimpleParamFunction('sequence'),
+    'X-OC-HIDESUBTASKS': generateSimpleParamFunction('hideSubtasks'),
+
+    'RRULE': function objectCategories(value, params, events, lastEvent) {
+        lastEvent.rrule = RRule.parseString(value);
+        return lastEvent;
+    },
 
     'ORGANIZER': function objectOrganizer(value, params, events, lastEvent) {
         const mail = value.replace(/MAILTO:/i, '');

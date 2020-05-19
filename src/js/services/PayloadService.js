@@ -26,11 +26,10 @@ export const PayloadService = {
                         '        <d:getetag />\n' +
                         '        <cal:calendar-data />\n' +
                         '    </d:prop>\n' +
-                        '    <cal:filter>\n'+
-                        '        <cal:comp-filter name="VCALENDAR">\n'+
-                        '            <cal:comp-filter name="VTODO">\n'+
-                        '            </cal:comp-filter>\n'+
-                        '        </cal:comp-filter>\n'+
-                        '    </cal:filter>\n'+
+                        '    <cal:filter>\n' +
+                        '        <cal:comp-filter name="VCALENDAR">\n' +
+                        '            <cal:comp-filter name="VTODO" />\n' +
+                        '        </cal:comp-filter>\n' +
+                        '    </cal:filter>\n' +
                         '</cal:calendar-query>',
 };

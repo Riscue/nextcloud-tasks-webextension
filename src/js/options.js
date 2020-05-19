@@ -1,4 +1,8 @@
 import Vue from 'vue';
-import Options from '@vue/options/options';
+import OptionsComponent from '@vue/options/OptionsComponent';
 
-window.onload = () => new Vue(Options);
+// eslint-disable-next-line
+const comp = new Vue({
+    el: '#vue-container',
+    render: (rendered) => rendered(OptionsComponent)
+});

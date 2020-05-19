@@ -1,3 +1,7 @@
+<style src="./PopupComponent.scss"></style>
+<template src="./PopupComponent.html" />
+
+<script>
 import {BrowserApi} from '@jsP/browser';
 import {ApiService} from '@js/services/ApiService';
 import {UserService} from '@js/services/UserService';
@@ -61,3 +65,4 @@ export default {
         }
     }
 };
+</script>

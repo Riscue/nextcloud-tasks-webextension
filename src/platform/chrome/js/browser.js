@@ -15,8 +15,7 @@ export class Browser {
             version: browserInfo.version,
             os: platformInfo.os,
             arch: platformInfo.arch,
-            vendor: 'Google'
+            vendor: navigator.vendor
         };
     }
 }
-

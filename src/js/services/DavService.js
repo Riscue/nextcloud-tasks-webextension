@@ -1,5 +1,5 @@
 import * as jQuery from "jquery";
-import {parseICS} from "@js/services/ICSService";
+import {ICALHelper} from "@js/services/ICALHelper";
 import {ApiService} from "@js/services/ApiService";
 import {UserService} from "@js/services/UserService";
 import {PayloadService} from "@js/services/PayloadService";
@@ -69,7 +69,7 @@ export const DavService = {
             return {
                 raw: jq.find(this.selectors.DownloadCalendarData).text(),
                 ETag: jq.find(this.selectors.DownloadCalendarETag).text(),
-                ics: parseICS(jq.find(this.selectors.DownloadCalendarData).text())[0]
+                ics: ICALHelper.parse(jq.find(this.selectors.DownloadCalendarData).text())
             };
         }).get();
         console.log(response);

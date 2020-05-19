@@ -14,7 +14,7 @@
                 <label>Calendar Name: {{calendarData.displayName}}</label>
                 <ul id="example-1">
                     <li v-for="calendarItem in calendarItems" :key="calendarItem.ics.uuid">
-                        {{ calendarItem.ics.name }}
+                        {{ calendarItem.ics.summary }}
                     </li>
                 </ul>
             </center>

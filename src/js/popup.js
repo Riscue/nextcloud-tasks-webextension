@@ -1,4 +1,8 @@
 import Vue from 'vue';
-import Popup from '@vue/popup/popup';
+import PopupComponent from '@vue/popup/PopupComponent';
 
-window.onload = () => new Vue(Popup);
+// eslint-disable-next-line
+const comp = new Vue({
+    el: '#vue-container',
+    render: (rendered) => rendered(PopupComponent)
+});

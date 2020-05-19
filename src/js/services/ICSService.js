@@ -1,9 +1,9 @@
 'use strict';
 
 function generateDateFunction(name) {
-    return function(value, params, events, lastEvent) {
-        var matches = /^(\d{4})(\d{2})(\d{2})$/.exec(value);
-        if(matches !== null) {
+    return function (value, params, events, lastEvent) {
+        const matches = /^(\d{4})(\d{2})(\d{2})$/.exec(value);
+        if (matches !== null) {
             lastEvent[name] = new Date(parseInt(matches[1], 10), parseInt(matches[2], 10) - 1, parseInt(matches[3], 10));
             return lastEvent;
         }
@@ -16,15 +16,15 @@ function generateDateFunction(name) {
 }
 
 function generateSimpleParamFunction(name) {
-    return function(value, params, events, lastEvent) {
+    return function (value, params, events, lastEvent) {
         lastEvent[name] = value.replace(/\\n/g, "\n");
         return lastEvent;
     };
 }
 
-var objects = {
+const objects = {
     'BEGIN': function objectBegin(value, params, events, lastEvent) {
-        if(value === "VCALENDAR") {
+        if (value === "VCALENDAR") {
             return null;
         }
 
@@ -37,18 +37,18 @@ var objects = {
     },
 
     'END': function objectEnd(value, params, events, lastEvent, data) {
-        if(value === "VCALENDAR") {
+        if (value === "VCALENDAR") {
             return lastEvent;
         }
 
         data.push(lastEvent);
 
-        var index = events.indexOf(lastEvent);
-        if(index !== -1) {
+        const index = events.indexOf(lastEvent);
+        if (index !== -1) {
             events.splice(events.indexOf(lastEvent), 1);
         }
 
-        if(events.length === 0) {
+        if (events.length === 0) {
             lastEvent = null;
         }
         else {
@@ -71,9 +71,9 @@ var objects = {
     'URL': generateSimpleParamFunction('url'),
 
     'ORGANIZER': function objectOrganizer(value, params, events, lastEvent) {
-        var mail = value.replace(/MAILTO:/i, '');
+        const mail = value.replace(/MAILTO:/i, '');
 
-        if(params.CN) {
+        if (params.CN) {
             lastEvent.organizer = {
                 name: params.CN,
                 mail: mail
@@ -88,8 +88,8 @@ var objects = {
     },
 
     'GEO': function objectGeo(value, params, events, lastEvent) {
-        var pos = value.split(';');
-        if(pos.length !== 2) {
+        const pos = value.split(';');
+        if (pos.length !== 2) {
             return lastEvent;
         }
 
@@ -105,13 +105,13 @@ var objects = {
     },
 
     'ATTENDEE': function objectAttendee(value, params, events, lastEvent) {
-        if(!lastEvent.attendee) {
+        if (!lastEvent.attendee) {
             lastEvent.attendee = [];
         }
 
-        var mail = value.replace(/MAILTO:/i, '');
+        const mail = value.replace(/MAILTO:/i, '');
 
-        if(params.CN) {
+        if (params.CN) {
             lastEvent.attendee.push({
                 name: params.CN,
                 mail: mail
@@ -126,46 +126,46 @@ var objects = {
     }
 };
 
-module.exports = function parseICS(str) {
-    var data = [];
+export function parseICS(str) {
+    const data = [];
 
-    var events = [];
-    var lastEvent = {};
+    const events = [];
+    let lastEvent = {};
 
-    var lines = str.split('\n');
+    const lines = str.split('\n');
 
-    for(var i = 0, len = lines.length; i < len; i += 1) {
-        var line = lines[i].trim();
+    for (let i = 0, len = lines.length; i < len; i += 1) {
+        let line = lines[i].trim();
 
-        while(i + 1 < len && lines[i + 1].match(/^ /)) {
+        while (i + 1 < len && lines[i + 1].match(/^ /)) {
             i += 1;
             line += lines[i].trim();
         }
 
-        var dataLine = line.split(':');
-        if(dataLine.length < 2) {
+        const dataLine = line.split(':');
+        if (dataLine.length < 2) {
             continue;
         }
 
-        var dataName = dataLine[0].split(';');
+        const dataName = dataLine[0].split(';');
 
-        var name = dataName[0];
+        const name = dataName[0];
         dataName.splice(0, 1);
 
-        var params = {};
-        dataName.forEach(function(param) {
+        const params = {};
+        dataName.forEach(function (param) {
             param = param.split('=');
-            if(param.length === 2) {
+            if (param.length === 2) {
                 params[param[0]] = param[1];
             }
         });
 
         dataLine.splice(0, 1);
-        var value = dataLine.join(':');
+        const value = dataLine.join(':');
         if (objects[name]) {
-            lastEvent = objects[name](value, (params) ? params : '', events, (lastEvent) ? lastEvent : {}, data);
+            lastEvent = objects[name](value, params, events, lastEvent, data);
         }
     }
 
     return data;
-};
+}

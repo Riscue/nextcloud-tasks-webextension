@@ -10,7 +10,6 @@ import {DavService} from '@js/services/DavService';
 import {PromiseService} from '@js/services/PromiseService';
 
 export default {
-    el: '#vue-container',
     props: {
         renderLoginForm: {
             type: Boolean,

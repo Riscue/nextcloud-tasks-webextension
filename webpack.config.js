@@ -24,7 +24,7 @@ module.exports = (env) => {
             }
         ),
         new VueLoaderPlugin(),
-        new CopyWebpackPlugin([`src/platform/generic`, `src/platform/${platform}`]),
+        new CopyWebpackPlugin({patterns: [`src/platform/generic`, `src/platform/${platform}`]}),
         new MiniCssExtractPlugin({filename: 'css/[name].css'}),
         new CleanWebpackPlugin(
             {

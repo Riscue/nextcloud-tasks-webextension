@@ -1,4 +1,5 @@
 import * as jQuery from "jquery";
+import * as parseICS from "ics-parser";
 import {ApiService} from "@js/services/ApiService";
 import {UserService} from "@js/services/UserService";
 import {PayloadService} from "@js/services/PayloadService";
@@ -12,10 +13,11 @@ export const DavService = {
         const httpResponse = await
             ApiService.propfind(
                 `/.well-known/caldav`,
-                this.payloads.discover, UserService.getCredentials(),
+                this.payloads.Discover,
+                UserService.getCredentials(),
                 {headers: {"depth": 0}}
             );
-        const response = jQuery(httpResponse.data).find(this.selectors.discover).text();
+        const response = jQuery(httpResponse.data).find(this.selectors.Discover).text();
         console.log(response);
         return response;
     },
@@ -24,11 +26,12 @@ export const DavService = {
         const httpResponse = await
             ApiService.propfind(
                 principal,
-                this.payloads.calendarHomeSet, UserService.getCredentials(),
+                this.payloads.CalendarHomeSet,
+                UserService.getCredentials(),
                 {headers: {"depth": 0}}
             );
 
-        const response = jQuery(httpResponse.data).find(this.selectors.calendarHomeSet).text();
+        const response = jQuery(httpResponse.data).find(this.selectors.CalendarHomeSet).text();
         console.log(response);
         return response;
     },
@@ -37,16 +40,17 @@ export const DavService = {
         const httpResponse = await
             ApiService.propfind(
                 calendarHome,
-                this.payloads.calendarData, UserService.getCredentials(),
+                this.payloads.CalendarData,
+                UserService.getCredentials(),
                 {headers: {"depth": 1}}
             );
 
 
-        const calendarResponse = jQuery(httpResponse.data).find(this.selectors.calendarData).parents('d\\:response');
+        const calendarResponse = jQuery(httpResponse.data).find(this.selectors.CalendarData).parents('d\\:response');
         const response = {
-            href: calendarResponse.find(this.selectors.calendarDataHref).text(),
-            displayName: calendarResponse.find(this.selectors.calendarDataDisplayName).text(),
-            getCtag: calendarResponse.find(this.selectors.calendarDataGetCtag).text()
+            href: calendarResponse.find(this.selectors.CalendarDataHref).text(),
+            displayName: calendarResponse.find(this.selectors.CalendarDataDisplayName).text(),
+            getCtag: calendarResponse.find(this.selectors.CalendarDataGetCtag).text()
         };
         console.log(response);
         return response;
@@ -56,11 +60,18 @@ export const DavService = {
         const httpResponse = await
             ApiService.report(
                 calendar,
-                this.payloads.downloadCalendar, UserService.getCredentials(),
+                this.payloads.DownloadCalendar,
+                UserService.getCredentials(),
                 {headers: {"depth": 1}}
             );
-
-        const response = jQuery(httpResponse.data).find(this.selectors.downloadCalendar).parent().parent().parent().parent().parent();
+        const response = jQuery(httpResponse.data).find(this.selectors.DownloadCalendar).map((index, value) => {
+            const jq = jQuery(value);
+            return {
+                raw: jq.find(this.selectors.DownloadCalendarData).text(),
+                ETag: jq.find(this.selectors.DownloadCalendarETag).text(),
+                ics: parseICS(jq.find(this.selectors.DownloadCalendarData).text())[0]
+            };
+        }).get();
         console.log(response);
         return response;
     },

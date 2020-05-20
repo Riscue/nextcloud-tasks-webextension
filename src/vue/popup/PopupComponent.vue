@@ -1,15 +1,18 @@
 <style src="./PopupComponent.scss"></style>
 <template src="./PopupComponent.html"/>
 
-<script lang="ts">
-    import {BrowserApi} from '../../platform/chrome/js/browser';
-    import {ApiService} from '../../js/services/ApiService';
-    import {UserService} from '../../js/services/UserService';
-    import {StorageService} from '../../js/services/StorageService';
-    import {DavService} from '../../js/services/DavService';
-    import {PromiseService} from '../../js/services/PromiseService';
+<script>
+    import {BrowserApi} from '@jsP/browser';
+    import {ApiService} from '@js/services/ApiService';
+    import {UserService} from '@js/services/UserService';
+    import {StorageService} from '@js/services/StorageService';
+    import {DavService} from '@js/services/DavService';
+    import {PromiseService} from '@js/services/PromiseService';
 
     export default {
+        // render: function (createElement) {
+        //     return require('./PopupComponent.html');
+        // },
         props: {
             renderLoginForm: {
                 type: Boolean,

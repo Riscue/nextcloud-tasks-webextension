@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import {MdButton} from 'vue-material/dist/components';
-import PopupComponent from '../vue/popup/PopupComponent.vue';
+import PopupComponent from '@vue/popup/PopupComponent.vue';
 
 Vue.use(MdButton);
 

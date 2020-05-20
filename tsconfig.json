@@ -17,6 +17,9 @@
       ],
       "@scssP/*": [
         "./platform/chrome/scss/*"
+      ],
+      "@resources/*": [
+        "./resources/*"
       ]
     },
     "baseUrl": "./src",
@@ -31,7 +34,8 @@
     "importHelpers": true,
     "target": "es2017",
     "typeRoots": [
-      "node_modules/@types"
+      "node_modules/@types",
+      "./src/types"
     ],
     "lib": [
       "es2017",

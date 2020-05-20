@@ -1,70 +1,66 @@
 <template src="./PopupComponent.html"/>
 
 <script lang="ts">
+    import Vue from 'vue';
+    import {Component} from 'vue-property-decorator';
     import {BrowserApi} from '@jsP/browser-api';
-    import {ApiService} from '@js/services/ApiService';
-    import {UserService} from '@js/services/UserService';
-    import {StorageService} from '@js/services/StorageService';
-    import {DavService} from '@js/services/DavService';
-    import {PromiseService} from '@js/services/PromiseService';
+    import {UserService} from '@js/services/user.service';
+    import {StorageService} from '@js/services/storage.service';
+    import {DavService} from '@js/services/dav.service';
+    import {PromiseService} from '@js/services/promise.service';
+    import {ContextHelper} from '@js/helpers/context.helper';
     import './PopupComponent.scss'
 
-    export default {
-        // render: function (createElement) {
-        //     return require('./PopupComponent.html');
-        // },
-        props: {
-            renderLoginForm: {
-                type: Boolean,
-                default: !UserService.isLoggedIn()
-            },
-            openSettingsWindowButton: {
-                type: String,
-                default: BrowserApi.getBrowserApi().i18n.getMessage('OpenSettingsWindowButton', null)
-            }
-        },
-        data: function () {
-            return {
-                username: StorageService.get(StorageService.USERNAME),
-                password: '',
-                calendarData: {},
-                calendarItems: []
-            };
-        },
-        watch: {
-            username: function (username) {
-                this.username = username;
-            },
-            password: function (password) {
-                this.password = password;
-            }
-        },
-        created: function () {
-            ApiService.init('https://cloud.riscue.xyz');
+    @Component
+    export default class PopupComponent extends Vue {
+
+        private userService: UserService;
+        private storageService: StorageService;
+        private davService: DavService;
+        private promiseService: PromiseService;
+
+        username = '';
+        password = '';
+        openSettingsWindowButton = BrowserApi.getBrowserApi().i18n.getMessage('OpenSettingsWindowButton', null);
+        calendarData = {href: ''};
+        calendarItems = [];
+
+        init() {
+            this.userService = ContextHelper.provide(UserService) as UserService;
+            this.storageService = ContextHelper.provide(StorageService) as StorageService;
+            this.davService = ContextHelper.provide(DavService) as DavService;
+            this.promiseService = ContextHelper.provide(PromiseService) as PromiseService;
+        }
+
+        created() {
+            this.init();
             BrowserApi.getBrowserInfo().then(console.log);
-        },
-        mounted: function () {
-            if (UserService.isLoggedIn()) {
+
+            this.username = this.storageService.get(StorageService.USERNAME);
+        }
+
+        mounted() {
+            if (this.userService.isLoggedIn()) {
                 this.fetchCalendar();
             }
-        },
-        methods: {
-            openSettings: function () {
-                BrowserApi.getBrowserApi().runtime.openOptionsPage();
-                window.close();
-            },
-            fetchCalendar: function () {
-                PromiseService.bind(this).then(DavService.discover(), (principal) => {
-                    PromiseService.bind(this).then(DavService.calendarHomeSet(principal), (calendarHome) => {
-                        PromiseService.bind(this).then(DavService.calendarData(calendarHome), (result) => {
-                            this.calendarData = result;
-                            PromiseService.bind(this).then(DavService.downloadCalendar(this.calendarData.href), (calendarItems) => {
-                                this.calendarItems = calendarItems;
-                            });
+        }
+
+        openSettings() {
+            BrowserApi.getBrowserApi().runtime.openOptionsPage();
+            window.close();
+        }
+
+        fetchCalendar() {
+            this.promiseService.bind(this).then(this.davService.discover(), (principal) => {
+                this.promiseService.bind(this).then(this.davService.calendarHomeSet(principal), (calendarHome) => {
+                    this.promiseService.bind(this).then(this.davService.calendarData(calendarHome), (result) => {
+                        this.calendarData = result;
+                        this.promiseService.bind(this).then(this.davService.downloadCalendar(this.calendarData.href), (calendarItems) => {
+                            this.calendarItems = calendarItems;
                         });
                     });
                 });
-            }
+            });
         }
     };
 </script>

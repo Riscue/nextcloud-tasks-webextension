@@ -11,5 +11,9 @@
         // style: require('./OptionsComponent.scss')
     })
     export default class OptionsComponent extends Vue {
+
+        saveSettings() {
+            alert('test');
+        }
     }
 </script>

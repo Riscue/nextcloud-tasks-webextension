@@ -1,13 +1,17 @@
-<div id="popup">
-    <button id="openSetting" type="button" @click="openSettings()">{{ openSettingsWindowButton }}</button>
-    <div>
-        <label>Username: {{ username }}</label>
-        <br>
-        <label>Calendar Name: {{ calendarData.displayName }}</label>
-        <ul id="example-1">
-            <li v-for="calendarItem in calendarItems" :key="calendarItem.ics.uuid">
-                {{ calendarItem.ics.summary }}
-            </li>
-        </ul>
-    </div>
+<div>
+    <md-list class="md-double-line">
+
+        <div v-for="calendarItem in calendarItems" :key="calendarItem.ics.uuid">
+            <md-list-item>
+                <div class="md-list-item-text">
+                    <span :class="{ 'completed': calendarItem.ics.completed }">{{calendarItem.ics.summary}}</span>
+                    <div class="div-placeholder" v-if="!calendarItem.ics.categories"></div>
+                    <md-chip v-for="chip in calendarItem.ics.categories" :key="chip">{{ chip }}</md-chip>
+                </div>
+            </md-list-item>
+
+            <md-divider></md-divider>
+        </div>
+    </md-list>
+
 </div>

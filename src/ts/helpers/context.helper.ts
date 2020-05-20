@@ -14,7 +14,7 @@ export class ContextHelper {
     }
 
     static buildContext() {
-        this.context.push(new ApiService('https://cloud.riscue.xyz'));
+        this.context.push(new ApiService());
         this.context.push(new PromiseService());
         this.context.push(new StorageService());
         this.context.push(new UserService(ContextHelper.provide(StorageService), ContextHelper.provide(ApiService)));

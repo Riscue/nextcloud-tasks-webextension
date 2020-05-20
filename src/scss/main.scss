@@ -4,3 +4,7 @@ body {
   width: 300px;
   font-family: sans-serif;
 }
+
+div.div-placeholder:before {
+  content: '\00a0\00a0';
+}

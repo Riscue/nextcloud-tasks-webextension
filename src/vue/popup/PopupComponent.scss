@@ -1,0 +1,11 @@
+.md-list-item-text {
+  .md-chip {
+    line-height: 32px;
+    width: unset;
+    font-size: 12px !important;
+  }
+}
+
+.completed {
+  text-decoration: line-through;
+}

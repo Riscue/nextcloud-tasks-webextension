@@ -1,0 +1,40 @@
+{
+  "strict": true,
+  "compileOnSave": false,
+  "compilerOptions": {
+    "paths": {
+//      "@vue/*": [
+//        "src/vue"
+//      ],
+//      "@js/*": [
+//        "src/js"
+//      ],
+//      "@jsP/*": [
+//        "src/platform/chrome/js"
+//      ],
+//      "@scss/*": [
+//        "src/scss"
+//      ],
+//      "@scssP/*": [
+//        "src/platform/chrome/scss"
+//      ]
+    },
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2017",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2017",
+      "dom"
+    ]
+  }
+}

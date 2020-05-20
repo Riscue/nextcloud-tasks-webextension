@@ -31,7 +31,7 @@ module.exports = (env) => {
             {
                 cleanStaleWebpackAssets     : false,
                 cleanOnceBeforeBuildPatterns: ['**/*'],
-                cleanAfterEveryBuildPatterns: ['js/Platform', 'scss']
+                cleanAfterEveryBuildPatterns: ['scss']
             }
         ),
     ];
@@ -41,8 +41,8 @@ module.exports = (env) => {
         devtool: production ? 'none' : 'inline-source-map',
         entry  : {
             client    : `${__dirname}/src/js/client.js`,
-            popup     : `${__dirname}/src/js/popup.js`,
-            options   : `${__dirname}/src/js/options.js`,
+            popup     : `${__dirname}/src/js/popup.ts`,
+            options   : `${__dirname}/src/js/options.ts`,
             background: `${__dirname}/src/js/background.js`,
         },
         output : {
@@ -51,7 +51,7 @@ module.exports = (env) => {
         },
         resolve: {
             modules   : ['node_modules', 'src'],
-            extensions: ['.js', '.vue', '.json'],
+            extensions: ['.ts', '.js', '.vue', '.json'],
             alias     : {
                 '@vue'  : `${__dirname}/src/vue`,
                 '@js'   : `${__dirname}/src/js`,
@@ -65,6 +65,18 @@ module.exports = (env) => {
                 {
                     test  : /\.vue$/,
                     loader: 'vue-loader'
+                },
+                {
+                    test   : /\.ts$/,
+                    exclude: /node_modules/,
+                    use    : [
+                           {
+                               loader : 'ts-loader',
+                               options: {
+                                   appendTsSuffixTo: [/\.vue$/]
+                               }
+                           }
+                    ]
                 },
                 {
                     test   : /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,

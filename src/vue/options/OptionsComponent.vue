@@ -1,12 +1,15 @@
 <style src="./OptionsComponent.scss"></style>
-<template src="./OptionsComponent.html" />
+<template src="./OptionsComponent.html"/>
 
-<script>
-export default {
-    el: '#vue-container',
-    props: {},
-    data: function () {
-        return {};
+<script lang="ts">
+    import Vue from 'vue';
+    import {Component} from 'vue-property-decorator';
+    // import './OptionsComponent.scss'
+
+    @Component({
+        // template: require('./OptionsComponent.html'),
+        // style: require('./OptionsComponent.scss')
+    })
+    export default class OptionsComponent extends Vue {
     }
-};
 </script>

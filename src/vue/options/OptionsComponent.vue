@@ -1,10 +1,9 @@
-<style src="./OptionsComponent.scss"></style>
 <template src="./OptionsComponent.html"/>
 
 <script lang="ts">
     import Vue from 'vue';
     import {Component} from 'vue-property-decorator';
-    // import './OptionsComponent.scss'
+    import './OptionsComponent.scss'
 
     @Component({
         // template: require('./OptionsComponent.html'),

@@ -1,10 +1,10 @@
-import {BrowserApi} from '@jsP/browser';
+import {BrowserApi} from '@jsP/browser-api';
 
-function processMessage (msg, sender, sendResponse) {
+function processMessage(msg, sender) {
     console.log(msg.type);
 }
 
-function onEvent (str) {
+function onEvent(str) {
     console.log(str);
 }
 

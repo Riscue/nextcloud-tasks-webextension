@@ -6,5 +6,5 @@ Vue.use(MdButton);
 
 new Vue({
     el: '#vue-container',
-    render: (rendered) => rendered(OptionsComponent)
+    render: (renderer) => renderer(OptionsComponent)
 });

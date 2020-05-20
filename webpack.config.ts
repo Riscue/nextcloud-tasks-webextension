@@ -1,50 +1,37 @@
-/* eslint-disable */
-const webpack              = require('webpack'),
-      CopyWebpackPlugin    = require('copy-webpack-plugin'),
-      {CleanWebpackPlugin} = require('clean-webpack-plugin'),
-      VueLoaderPlugin      = require('vue-loader/lib/plugin'),
-      MiniCssExtractPlugin = require('mini-css-extract-plugin'),
-      resolveTsAliases     = require('./resolve-tsconfig-paths-to-webpack-alias.js'),
-      config               = require('./package.json');
+import {Configuration, DefinePlugin} from "webpack";
+import {CleanWebpackPlugin} from "clean-webpack-plugin";
+import {VueLoaderPlugin} from "vue-loader";
+import * as MiniCssExtractPlugin from "mini-css-extract-plugin";
+import * as CopyWebpackPlugin from "copy-webpack-plugin";
+import * as config from './package.json';
 
-module.exports = (env) => {
+function resolveTsAliases({tsconfigPath = './tsconfig.json', webpackConfigBasePath = __dirname, params = {}}) {
+    const {paths, baseUrl} = require(tsconfigPath).compilerOptions;
+
+    const aliases = {};
+
+    Object.keys(paths).forEach((item) => {
+        const key = item.replace('/*', '');
+        aliases[key] = `${webpackConfigBasePath}/${baseUrl.replace('./', '').replace('.', '')}/${paths[item][0].replace('/*', '').replace('*', '').replace('./', '').replace('.', '')}`;
+    });
+
+    return aliases;
+}
+
+export default (env): Configuration => {
     let production = env.production === true,
-        platform   = env.platform ? env.platform : 'chrome';
+        platform   = env.platform || 'chrome';
     console.log('Production: ', production);
     console.log('Platform  : ', platform);
 
-    let plugins = [
-        new webpack.DefinePlugin(
-            {
-                'process.env': {
-                    NODE_ENV    : production ? '"production"' : '"development"',
-                    APP_VERSION : `"${config.version}"`,
-                    APP_NAME    : '"extension"',
-                    APP_PLATFORM: `"${platform}"`,
-                    BUILD_TARGET: `"${platform}"`
-                }
-            }
-        ),
-        new VueLoaderPlugin(),
-        new CopyWebpackPlugin({patterns: [`src/platform/generic`, `src/platform/${platform}`]}),
-        new MiniCssExtractPlugin({filename: 'css/[name].css'}),
-        new CleanWebpackPlugin(
-            {
-                cleanStaleWebpackAssets     : false,
-                cleanOnceBeforeBuildPatterns: ['**/*'],
-                cleanAfterEveryBuildPatterns: ['scss']
-            }
-        ),
-    ];
-
     return {
         mode   : production ? 'production' : 'development',
-        devtool: production ? 'none' : 'inline-source-map',
+        devtool: production ? false : 'inline-source-map',
         entry  : {
-            client    : `${__dirname}/src/js/client.js`,
+            client    : `${__dirname}/src/js/client.ts`,
             popup     : `${__dirname}/src/js/popup.ts`,
             options   : `${__dirname}/src/js/options.ts`,
-            background: `${__dirname}/src/js/background.js`,
+            background: `${__dirname}/src/js/background.ts`,
         },
         output : {
             path      : `${__dirname}/dist/`,
@@ -99,7 +86,7 @@ module.exports = (env) => {
                             loader : 'sass-loader',
                             options: {
                                 sassOptions: {
-                                    outputStyle: 'compressed'
+                                    outputStyle: production ? 'compressed' : undefined
                                 }
                             }
                         }
@@ -107,6 +94,28 @@ module.exports = (env) => {
                 }
             ]
         },
-        plugins
+        plugins: [
+            new DefinePlugin(
+                {
+                    'process.env': {
+                        NODE_ENV    : production ? '"production"' : '"development"',
+                        APP_VERSION : `"${config.version}"`,
+                        APP_NAME    : `"${config.name}"`,
+                        APP_PLATFORM: `"${platform}"`,
+                        BUILD_TARGET: `"${platform}"`
+                    }
+                }
+            ),
+            new VueLoaderPlugin(),
+            new CopyWebpackPlugin([`src/platform/generic`, `src/platform/${platform}`]),
+            new MiniCssExtractPlugin({filename: 'css/[name].css'}),
+            new CleanWebpackPlugin(
+                {
+                    cleanStaleWebpackAssets     : false,
+                    cleanOnceBeforeBuildPatterns: ['**/*'],
+                    cleanAfterEveryBuildPatterns: ['scss']
+                }
+            ),
+        ]
     };
 };

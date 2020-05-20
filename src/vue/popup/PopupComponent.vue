@@ -1,13 +1,13 @@
-<style src="./PopupComponent.scss"></style>
 <template src="./PopupComponent.html"/>
 
-<script>
-    import {BrowserApi} from '@jsP/browser';
+<script lang="ts">
+    import {BrowserApi} from '@jsP/browser-api';
     import {ApiService} from '@js/services/ApiService';
     import {UserService} from '@js/services/UserService';
     import {StorageService} from '@js/services/StorageService';
     import {DavService} from '@js/services/DavService';
     import {PromiseService} from '@js/services/PromiseService';
+    import './PopupComponent.scss'
 
     export default {
         // render: function (createElement) {

@@ -19,7 +19,6 @@ function resolveTsAliases({tsconfigPath = './tsconfig.json', webpackConfigBasePa
         aliases[key] = resolve(webpackConfigBasePath, replace(baseUrl), replace(paths[item][0]));
     });
 
-    console.log(aliases);
     return aliases;
 }
 
@@ -69,10 +68,8 @@ export default (env): Configuration => {
                     test   : /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
                     loader : 'url-loader',
                     options: {
-                        limit          : 256,
-                        outputPath     : 'css/',
-                        publicPath     : '/css/',
-                        useRelativePath: false
+                        limit : 50000,
+                        name  : "/assets/[name].[ext]",
                     }
                 },
                 {
@@ -94,6 +91,20 @@ export default (env): Configuration => {
                                     outputStyle: production ? 'compressed' : undefined
                                 }
                             }
+                        }
+                    ]
+                },
+                {
+                    test: /\.css$/,
+                    use : [
+                        {
+                            loader: 'vue-style-loader'
+                        },
+                        {
+                            loader: MiniCssExtractPlugin.loader
+                        },
+                        {
+                            loader: 'css-loader'
                         }
                     ]
                 }

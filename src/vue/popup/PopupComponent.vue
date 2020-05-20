@@ -34,8 +34,6 @@
 
         created() {
             this.init();
-            BrowserApi.getBrowserInfo().then(console.log);
-
             this.username = this.storageService.get(StorageService.USERNAME);
         }
 

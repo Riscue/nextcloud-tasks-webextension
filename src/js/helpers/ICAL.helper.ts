@@ -1,7 +1,7 @@
-import ICAL from 'ical.js';
+import * as ICAL from 'ical.js';
 
-export const ICALHelper = {
-    parse: function (str) {
+export class ICALHelper {
+    static parse(str) {
         const component = new ICAL.Component(ICAL.parse(str)).getFirstSubcomponent('vtodo');
         const vtodo = {};
         component.getAllProperties().forEach((property) => {
@@ -10,4 +10,4 @@ export const ICALHelper = {
         });
         return vtodo;
     }
-};
+}

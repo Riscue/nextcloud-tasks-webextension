@@ -11,8 +11,11 @@
     })
     export default class OptionsComponent extends Vue {
 
+        // render(createElement) {
+        //     return require('./PopupComponent.html');
+        // },
         saveSettings() {
-            alert('test');
+            console.log('test');
         }
     }
 </script>

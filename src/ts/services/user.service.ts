@@ -1,7 +1,7 @@
-import {StorageService} from '@js/services/storage.service';
-import {ApiService} from '@js/services/api.service';
-import {AuthenticationError} from '@js/errors/authentication.error';
-import {Service} from '@js/services/service';
+import {StorageService} from '@ts/services/storage.service';
+import {ApiService} from '@ts/services/api.service';
+import {AuthenticationError} from '@ts/errors/authentication.error';
+import {Service} from '@ts/services/service';
 
 export class UserService extends Service {
 

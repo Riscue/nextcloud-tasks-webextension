@@ -1,4 +1,4 @@
-import {BrowserApi} from '@jsP/browser-api';
+import {BrowserApi} from '@tsP/browser-api';
 
 function processMessage(msg, sender) {
     console.log(msg.type);

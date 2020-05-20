@@ -1,10 +1,11 @@
 /* eslint-disable */
-let webpack              = require('webpack'),
-    config               = require('./package.json'),
-    CopyWebpackPlugin    = require('copy-webpack-plugin'),
-    {CleanWebpackPlugin} = require('clean-webpack-plugin'),
-    VueLoaderPlugin      = require('vue-loader/lib/plugin'),
-    MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const webpack              = require('webpack'),
+      CopyWebpackPlugin    = require('copy-webpack-plugin'),
+      {CleanWebpackPlugin} = require('clean-webpack-plugin'),
+      VueLoaderPlugin      = require('vue-loader/lib/plugin'),
+      MiniCssExtractPlugin = require('mini-css-extract-plugin'),
+      resolveTsAliases     = require('./resolve-tsconfig-paths-to-webpack-alias.js'),
+      config               = require('./package.json');
 
 module.exports = (env) => {
     let production = env.production === true,
@@ -52,13 +53,7 @@ module.exports = (env) => {
         resolve: {
             modules   : ['node_modules', 'src'],
             extensions: ['.ts', '.js', '.vue', '.json'],
-            alias     : {
-                '@vue'  : `${__dirname}/src/vue`,
-                '@js'   : `${__dirname}/src/js`,
-                '@jsP'  : `${__dirname}/src/platform/${platform}/js`,
-                '@scss' : `${__dirname}/src/scss`,
-                '@scssP': `${__dirname}/src/platform/${platform}/scss`
-            }
+            alias     : resolveTsAliases({params: {'platform': platform}})
         },
         module : {
             rules: [

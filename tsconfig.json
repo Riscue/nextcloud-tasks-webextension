@@ -3,23 +3,23 @@
   "compileOnSave": false,
   "compilerOptions": {
     "paths": {
-//      "@vue/*": [
-//        "src/vue"
-//      ],
-//      "@js/*": [
-//        "src/js"
-//      ],
-//      "@jsP/*": [
-//        "src/platform/chrome/js"
-//      ],
-//      "@scss/*": [
-//        "src/scss"
-//      ],
-//      "@scssP/*": [
-//        "src/platform/chrome/scss"
-//      ]
+      "@vue/*": [
+        "./vue/*"
+      ],
+      "@js/*": [
+        "./js/*"
+      ],
+      "@jsP/*": [
+        "./platform/chrome/js/*"
+      ],
+      "@scss/*": [
+        "./scss/*"
+      ],
+      "@scssP/*": [
+        "./platform/chrome/scss/*"
+      ]
     },
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,

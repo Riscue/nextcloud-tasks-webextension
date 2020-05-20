@@ -1,5 +1,5 @@
 import axios, {AxiosBasicCredentials, AxiosRequestConfig, AxiosResponse, Method} from 'axios';
-import {Service} from '@js/services/service';
+import {Service} from '@ts/services/service';
 
 export class ApiService extends Service {
 

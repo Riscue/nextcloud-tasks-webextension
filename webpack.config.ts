@@ -1,20 +1,25 @@
-import {Configuration, DefinePlugin} from "webpack";
-import {CleanWebpackPlugin} from "clean-webpack-plugin";
-import {VueLoaderPlugin} from "vue-loader";
-import * as MiniCssExtractPlugin from "mini-css-extract-plugin";
-import * as CopyWebpackPlugin from "copy-webpack-plugin";
+import {Configuration, DefinePlugin} from 'webpack';
+import {CleanWebpackPlugin} from 'clean-webpack-plugin';
+import {VueLoaderPlugin} from 'vue-loader';
+import {resolve} from 'path';
+import * as MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import * as CopyWebpackPlugin from 'copy-webpack-plugin';
 import * as config from './package.json';
 
 function resolveTsAliases({tsconfigPath = './tsconfig.json', webpackConfigBasePath = __dirname, params = {}}) {
     const {paths, baseUrl} = require(tsconfigPath).compilerOptions;
-
     const aliases = {};
 
+    const replace = function (str) {
+        return str.replace('/*', '').replace('*', '').replace('./', '').replace('.', '');
+    };
+
     Object.keys(paths).forEach((item) => {
-        const key = item.replace('/*', '');
-        aliases[key] = `${webpackConfigBasePath}/${baseUrl.replace('./', '').replace('.', '')}/${paths[item][0].replace('/*', '').replace('*', '').replace('./', '').replace('.', '')}`;
+        const key = replace(item);
+        aliases[key] = resolve(webpackConfigBasePath, replace(baseUrl), replace(paths[item][0]));
     });
 
+    console.log(aliases);
     return aliases;
 }
 
@@ -28,10 +33,10 @@ export default (env): Configuration => {
         mode   : production ? 'production' : 'development',
         devtool: production ? false : 'inline-source-map',
         entry  : {
-            client    : `${__dirname}/src/js/client.ts`,
-            popup     : `${__dirname}/src/js/popup.ts`,
-            options   : `${__dirname}/src/js/options.ts`,
-            background: `${__dirname}/src/js/background.ts`,
+            client    : `${__dirname}/src/ts/client.ts`,
+            popup     : `${__dirname}/src/ts/popup.ts`,
+            options   : `${__dirname}/src/ts/options.ts`,
+            background: `${__dirname}/src/ts/background.ts`,
         },
         output : {
             path      : `${__dirname}/dist/`,

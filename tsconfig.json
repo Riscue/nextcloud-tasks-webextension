@@ -6,11 +6,11 @@
       "@vue/*": [
         "./vue/*"
       ],
-      "@js/*": [
-        "./js/*"
+      "@ts/*": [
+        "./ts/*"
       ],
-      "@jsP/*": [
-        "./platform/chrome/js/*"
+      "@tsP/*": [
+        "./platform/chrome/ts/*"
       ],
       "@scss/*": [
         "./scss/*"

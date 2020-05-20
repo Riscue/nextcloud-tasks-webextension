@@ -1,10 +1,10 @@
 import * as jQuery from 'jquery';
-import {ICALHelper} from '@js/helpers/ICAL.helper';
-import {ApiService} from '@js/services/api.service';
-import {UserService} from '@js/services/user.service';
+import {ICALHelper} from '@ts/helpers/ICAL.helper';
+import {ApiService} from '@ts/services/api.service';
+import {UserService} from '@ts/services/user.service';
+import {Service} from '@ts/services/service';
 import * as Payloads from '@resources/payloads.json';
 import * as Selectors from '@resources/selectors.json';
-import {Service} from '@js/services/service';
 
 export class DavService extends Service {
 

@@ -3,12 +3,12 @@
 <script lang="ts">
     import Vue from 'vue';
     import {Component} from 'vue-property-decorator';
-    import {BrowserApi} from '@jsP/browser-api';
-    import {UserService} from '@js/services/user.service';
-    import {StorageService} from '@js/services/storage.service';
-    import {DavService} from '@js/services/dav.service';
-    import {PromiseService} from '@js/services/promise.service';
-    import {ContextHelper} from '@js/helpers/context.helper';
+    import {BrowserApi} from '@tsP/browser-api';
+    import {UserService} from '@ts/services/user.service';
+    import {StorageService} from '@ts/services/storage.service';
+    import {DavService} from '@ts/services/dav.service';
+    import {PromiseService} from '@ts/services/promise.service';
+    import {ContextHelper} from '@ts/helpers/context.helper';
     import './PopupComponent.scss'
 
     @Component

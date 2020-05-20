@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import {MdButton} from 'vue-material/dist/components';
 import PopupComponent from '@vue/popup/PopupComponent.vue';
-import {ContextHelper} from '@js/helpers/context.helper';
+import {ContextHelper} from '@ts/helpers/context.helper';
+import '@scss/main.scss';
 
 Vue.use(MdButton);
 ContextHelper.buildContext();

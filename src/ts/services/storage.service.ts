@@ -1,4 +1,4 @@
-import {Service} from '@js/services/service';
+import {Service} from '@ts/services/service';
 
 export class StorageService extends Service {
     public static readonly USERNAME = 'username';

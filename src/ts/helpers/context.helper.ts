@@ -14,9 +14,9 @@ export class ContextHelper {
     }
 
     static buildContext() {
-        this.context.push(new ApiService());
         this.context.push(new PromiseService());
         this.context.push(new StorageService());
+        this.context.push(new ApiService(ContextHelper.provide(StorageService)));
         this.context.push(new UserService(ContextHelper.provide(StorageService), ContextHelper.provide(ApiService)));
         this.context.push(new DavService(ContextHelper.provide(ApiService), ContextHelper.provide(UserService)));
     }

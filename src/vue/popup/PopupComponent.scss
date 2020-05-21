@@ -1,11 +1,28 @@
 .md-list-item-text {
   .md-chip {
-    line-height: 32px;
+    line-height: 26px;
     width: unset;
     font-size: 12px !important;
   }
 }
 
+.md-chip {
+  height: 26px !important;
+}
+
 .completed {
   text-decoration: line-through;
+}
+
+.md-list.md-double-line .md-list-item-content {
+  min-height: 60px;
+}
+
+.md-list-item-text .md-chip {
+  margin: 4px 0 0 !important;
+  cursor: pointer;
+}
+
+.md-list {
+  padding: 0 !important;
 }

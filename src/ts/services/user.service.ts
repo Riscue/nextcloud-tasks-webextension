@@ -10,17 +10,18 @@ export class UserService extends Service {
         super(UserService);
     }
 
-    async login(username, password) {
+    async login(username: string, password: string, serverUrl: string) {
         try {
+            this.storageService.save(StorageService.USERNAME, username);
+            this.storageService.save(StorageService.PASSWORD, password);
+            this.storageService.save(StorageService.SERVER_URL, serverUrl);
             const response = await this.apiService.get(
                 '/ocs/v2.php/core/getapppassword',
                 {username, password},
                 {headers: {'OCS-APIRequest': true}}
             );
 
-            const apppassword = response.data.ocs.data.apppassword;
-            this.storageService.save(StorageService.USERNAME, username);
-            this.storageService.save(StorageService.APP_PASSWORD, apppassword);
+            this.storageService.save(StorageService.APP_PASSWORD, response.data.ocs.data.apppassword);
         } catch (error) {
             throw new AuthenticationError(error.response.status, error.response.data.detail);
         }

@@ -2,6 +2,8 @@ import {Service} from '@ts/services/service';
 
 export class StorageService extends Service {
     public static readonly USERNAME = 'username';
+    public static readonly PASSWORD = 'password';
+    public static readonly SERVER_URL = 'serverUrl';
     public static readonly APP_PASSWORD = 'apppassword';
 
     constructor() {

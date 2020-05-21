@@ -1,4 +1,4 @@
-import * as jQuery from 'jquery';
+import jQuery from 'jquery';
 import {ICALHelper} from '@ts/helpers/ICAL.helper';
 import {ApiService} from '@ts/services/api.service';
 import {UserService} from '@ts/services/user.service';

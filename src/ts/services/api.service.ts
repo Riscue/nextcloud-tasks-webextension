@@ -1,34 +1,40 @@
 import {AxiosBasicCredentials, AxiosRequestConfig, AxiosResponse, Method} from 'axios';
 import {Service} from '@ts/services/service';
-import * as Settings from '@resources/settings.json'
+import {StorageService} from '@ts/services/storage.service';
 
 export class ApiService extends Service {
 
-    constructor() {
+    constructor(private storageService: StorageService) {
         super(ApiService);
     }
 
     propfind<T = any, R = AxiosResponse<T>>(url: string, data: any, auth: AxiosBasicCredentials, config: AxiosRequestConfig): Promise<R> {
-        return this._customRequest({method: 'PROPFIND' as Method, url: `${Settings.url}${url}`, data, auth, ...config});
+        const serverUrl = this.storageService.get(StorageService.SERVER_URL);
+        return this._customRequest({method: 'PROPFIND' as Method, url: `${serverUrl}${url}`, data, auth, ...config});
     }
 
     report<T = any, R = AxiosResponse<T>>(url: string, data: any, auth: AxiosBasicCredentials, config: AxiosRequestConfig): Promise<R> {
-        return this._customRequest({method: 'REPORT' as Method, url: `${Settings.url}${url}`, data, auth, ...config});
+        const serverUrl = this.storageService.get(StorageService.SERVER_URL);
+        return this._customRequest({method: 'REPORT' as Method, url: `${serverUrl}${url}`, data, auth, ...config});
     }
 
     get<T = any, R = AxiosResponse<T>>(url: string, auth: AxiosBasicCredentials, config: AxiosRequestConfig): Promise<R> {
-        return this._customRequest({method: 'GET' as Method, url: `${Settings.url}${url}`, auth, ...config});
+        const serverUrl = this.storageService.get(StorageService.SERVER_URL);
+        return this._customRequest({method: 'GET' as Method, url: `${serverUrl}${url}`, auth, ...config});
     }
 
     post<T = any, R = AxiosResponse<T>>(url: string, data: any, auth: AxiosBasicCredentials, config: AxiosRequestConfig): Promise<R> {
-        return this._customRequest({method: 'POST' as Method, url: `${Settings.url}${url}`, data, auth, ...config});
+        const serverUrl = this.storageService.get(StorageService.SERVER_URL);
+        return this._customRequest({method: 'POST' as Method, url: `${serverUrl}${url}`, data, auth, ...config});
     }
 
     put<T = any, R = AxiosResponse<T>>(url: string, data: any, auth: AxiosBasicCredentials, config: AxiosRequestConfig): Promise<R> {
-        return this._customRequest({method: 'PUT' as Method, url: `${Settings.url}${url}`, data, auth, ...config});
+        const serverUrl = this.storageService.get(StorageService.SERVER_URL);
+        return this._customRequest({method: 'PUT' as Method, url: `${serverUrl}${url}`, data, auth, ...config});
     }
 
     delete<T = any, R = AxiosResponse<T>>(url: string, auth: AxiosBasicCredentials, config: AxiosRequestConfig): Promise<R> {
-        return this._customRequest({method: 'DELETE' as Method, url: `${Settings.url}${url}`, auth, ...config});
+        const serverUrl = this.storageService.get(StorageService.SERVER_URL);
+        return this._customRequest({method: 'DELETE' as Method, url: `${serverUrl}${url}`, auth, ...config});
     }
 }

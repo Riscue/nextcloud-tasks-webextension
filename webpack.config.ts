@@ -2,15 +2,15 @@ import {Configuration, DefinePlugin} from 'webpack';
 import {CleanWebpackPlugin} from 'clean-webpack-plugin';
 import {VueLoaderPlugin} from 'vue-loader';
 import {resolve} from 'path';
-import * as MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import * as CopyWebpackPlugin from 'copy-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 import * as config from './package.json';
 
 function resolveTsAliases({tsconfigPath = './tsconfig.json', webpackConfigBasePath = __dirname, params = {}}) {
     const {paths, baseUrl} = require(tsconfigPath).compilerOptions;
     const aliases = {};
 
-    const replace = (str) =>{
+    const replace = (str) => {
         return str.replace('/*', '').replace('*', '').replace('./', '').replace('.', '');
     };
 
@@ -26,7 +26,7 @@ export default (env: any = {}): Configuration => {
     const production    = !!env.production;
     const platform      = env.platform || 'chrome';
 
-    console.log('Production: ', env.production);
+    console.log('Production: ', production);
     console.log('Platform  : ', platform);
 
     return {

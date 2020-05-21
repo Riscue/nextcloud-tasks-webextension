@@ -1,5 +1,5 @@
-import {browser} from "webextension-polyfill-ts"
-import {UAParser} from "ua-parser-js";
+import {browser} from 'webextension-polyfill-ts'
+import {UAParser} from 'ua-parser-js';
 
 export class BrowserApi {
 

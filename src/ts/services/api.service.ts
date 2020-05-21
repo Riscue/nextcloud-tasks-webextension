@@ -1,4 +1,4 @@
-import axios, {AxiosBasicCredentials, AxiosRequestConfig, AxiosResponse, Method} from 'axios';
+import {AxiosBasicCredentials, AxiosRequestConfig, AxiosResponse, Method} from 'axios';
 import {Service} from '@ts/services/service';
 import * as Settings from '@resources/settings.json'
 
@@ -8,43 +8,27 @@ export class ApiService extends Service {
         super(ApiService);
     }
 
-    propfind<T = any, R = AxiosResponse<T>>(url: string, data: any, credentials: AxiosBasicCredentials, config: AxiosRequestConfig): Promise<R> {
-        config.method = 'PROPFIND' as Method;
-        config.url = `${Settings.url}${url}`;
-        config.data = data;
-        config.auth = credentials;
-        return axios.request(config);
+    propfind<T = any, R = AxiosResponse<T>>(url: string, data: any, auth: AxiosBasicCredentials, config: AxiosRequestConfig): Promise<R> {
+        return this._customRequest({method: 'PROPFIND' as Method, url: `${Settings.url}${url}`, data, auth, ...config});
     }
 
-    report<T = any, R = AxiosResponse<T>>(url: string, data: any, credentials: AxiosBasicCredentials, config: AxiosRequestConfig): Promise<R> {
-        config.method = 'REPORT' as Method;
-        config.url = `${Settings.url}${url}`;
-        config.data = data;
-        config.auth = credentials;
-        return axios.request(config);
+    report<T = any, R = AxiosResponse<T>>(url: string, data: any, auth: AxiosBasicCredentials, config: AxiosRequestConfig): Promise<R> {
+        return this._customRequest({method: 'REPORT' as Method, url: `${Settings.url}${url}`, data, auth, ...config});
     }
 
-    get<T = any, R = AxiosResponse<T>>(url: string, credentials: AxiosBasicCredentials, config: AxiosRequestConfig): Promise<R> {
-        config.auth = credentials;
-        const _url = `${Settings.url}${url}`;
-        return axios.get(_url, config);
+    get<T = any, R = AxiosResponse<T>>(url: string, auth: AxiosBasicCredentials, config: AxiosRequestConfig): Promise<R> {
+        return this._customRequest({method: 'GET' as Method, url: `${Settings.url}${url}`, auth, ...config});
     }
 
-    post<T = any, R = AxiosResponse<T>>(url: string, data: any, credentials: AxiosBasicCredentials, config: AxiosRequestConfig): Promise<R> {
-        config.auth = credentials;
-        const _url = `${Settings.url}${url}`;
-        return axios.post(_url, data, config);
+    post<T = any, R = AxiosResponse<T>>(url: string, data: any, auth: AxiosBasicCredentials, config: AxiosRequestConfig): Promise<R> {
+        return this._customRequest({method: 'POST' as Method, url: `${Settings.url}${url}`, data, auth, ...config});
     }
 
-    put<T = any, R = AxiosResponse<T>>(url: string, data: any, credentials: AxiosBasicCredentials, config: AxiosRequestConfig): Promise<R> {
-        config.auth = credentials;
-        const _url = `${Settings.url}${url}`;
-        return axios.put(_url, data, config);
+    put<T = any, R = AxiosResponse<T>>(url: string, data: any, auth: AxiosBasicCredentials, config: AxiosRequestConfig): Promise<R> {
+        return this._customRequest({method: 'PUT' as Method, url: `${Settings.url}${url}`, data, auth, ...config});
     }
 
-    delete<T = any, R = AxiosResponse<T>>(url: string, credentials: AxiosBasicCredentials, config: AxiosRequestConfig): Promise<R> {
-        config.auth = credentials;
-        const _url = `${Settings.url}${url}`;
-        return axios.delete(_url, config);
+    delete<T = any, R = AxiosResponse<T>>(url: string, auth: AxiosBasicCredentials, config: AxiosRequestConfig): Promise<R> {
+        return this._customRequest({method: 'DELETE' as Method, url: `${Settings.url}${url}`, auth, ...config});
     }
 }

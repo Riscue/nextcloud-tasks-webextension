@@ -13,7 +13,7 @@ export class PromiseService extends Service {
         return this;
     }
 
-    then<T = any>(promise: Promise<T>, successFn: Function, errorFn?: Function) {
+    then<T = any>(promise: Promise<T>, successFn: () => void, errorFn?: () => void) {
         promise
             .then((response: T) => {
                 successFn.call(this.that, response);

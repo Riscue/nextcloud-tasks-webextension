@@ -10,7 +10,7 @@ function resolveTsAliases({tsconfigPath = './tsconfig.json', webpackConfigBasePa
     const {paths, baseUrl} = require(tsconfigPath).compilerOptions;
     const aliases = {};
 
-    const replace = function (str) {
+    const replace = (str) =>{
         return str.replace('/*', '').replace('*', '').replace('./', '').replace('.', '');
     };
 
@@ -22,10 +22,11 @@ function resolveTsAliases({tsconfigPath = './tsconfig.json', webpackConfigBasePa
     return aliases;
 }
 
-export default (env): Configuration => {
-    let production = env.production === true,
-        platform   = env.platform || 'chrome';
-    console.log('Production: ', production);
+export default (env: any = {}): Configuration => {
+    const production    = !!env.production;
+    const platform      = env.platform || 'chrome';
+
+    console.log('Production: ', env.production);
     console.log('Platform  : ', platform);
 
     return {
@@ -39,12 +40,12 @@ export default (env): Configuration => {
         },
         output : {
             path      : `${__dirname}/dist/`,
-            filename  : "js/[name].js"
+            filename  : 'js/[name].js'
         },
         resolve: {
             modules   : ['node_modules', 'src'],
             extensions: ['.ts', '.js', '.vue', '.json'],
-            alias     : resolveTsAliases({params: {'platform': platform}})
+            alias     : resolveTsAliases({params: {platform}})
         },
         module : {
             rules: [
@@ -69,7 +70,7 @@ export default (env): Configuration => {
                     loader : 'url-loader',
                     options: {
                         limit : 50000,
-                        name  : "/assets/[name].[ext]",
+                        name  : '/assets/[name].[ext]',
                     }
                 },
                 {

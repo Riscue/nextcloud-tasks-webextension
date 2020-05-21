@@ -14,10 +14,7 @@ export class UserService extends Service {
         try {
             const response = await this.apiService.get(
                 '/ocs/v2.php/core/getapppassword',
-                {
-                    username: username,
-                    password: password
-                },
+                {username, password},
                 {headers: {'OCS-APIRequest': true}}
             );
 

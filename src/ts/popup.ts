@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import PopupComponent from '@vue/popup/PopupComponent.vue';
+import PopupComponent from '@components/popup/popup.component';
 import './configure.ts'
 
 const popupComponent = new Vue({

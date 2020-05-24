@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import OptionsComponent from '@vue/options/OptionsComponent.vue';
+import OptionsComponent from '@components/options/options.component';
 import './configure.ts'
 
 const optionsComponent = new Vue({

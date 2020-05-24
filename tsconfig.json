@@ -3,8 +3,8 @@
   "compileOnSave": false,
   "compilerOptions": {
     "paths": {
-      "@vue/*": [
-        "./vue/*"
+      "@components/*": [
+        "./components/*"
       ],
       "@ts/*": [
         "./ts/*"
@@ -36,7 +36,7 @@
     "target": "es2017",
     "typeRoots": [
       "node_modules/@types",
-      "./src/ts/types"
+      "./src/ts/typings"
     ],
     "lib": [
       "es2017",

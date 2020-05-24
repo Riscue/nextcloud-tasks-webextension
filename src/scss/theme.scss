@@ -24,6 +24,10 @@
   -webkit-font-smoothing: antialiased;
 }
 
+:root {
+  --md-theme-default-accent-on-background: blue;
+}
+
 .md-layout.md-gutter {
   margin-right: -12px;
   margin-left: -12px;

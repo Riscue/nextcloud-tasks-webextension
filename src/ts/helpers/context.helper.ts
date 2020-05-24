@@ -14,10 +14,16 @@ export class ContextHelper {
     }
 
     static buildContext() {
-        this.context.push(new PromiseService());
-        this.context.push(new StorageService());
-        this.context.push(new ApiService(ContextHelper.provide(StorageService)));
-        this.context.push(new UserService(ContextHelper.provide(StorageService), ContextHelper.provide(ApiService)));
-        this.context.push(new DavService(ContextHelper.provide(ApiService), ContextHelper.provide(UserService)));
+        const promiseService = new PromiseService();
+        const storageService = new StorageService();
+        const apiService = new ApiService(storageService);
+        const userService = new UserService(storageService, apiService);
+        const davService = new DavService(apiService, userService);
+
+        this.context.push(promiseService);
+        this.context.push(storageService);
+        this.context.push(apiService);
+        this.context.push(userService);
+        this.context.push(davService);
     }
 }

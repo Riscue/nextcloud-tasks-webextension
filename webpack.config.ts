@@ -48,8 +48,8 @@ export default (env: any = {}): Configuration => {
         {
             test    : /\.scss$/,
             use     : [
-                MiniCssExtractPlugin.loader,
                 'vue-style-loader',
+                MiniCssExtractPlugin.loader,
                 'css-loader',
                 {
                     loader  : 'sass-loader',
@@ -119,7 +119,7 @@ export default (env: any = {}): Configuration => {
 
     return {
         mode    : production ? 'production' : 'development',
-        devtool : production ? false : 'source-map',
+        devtool : production ? false : 'inline-source-map',
         entry   : {
             client          : `${__dirname}/src/ts/client.ts`,
             popup           : `${__dirname}/src/ts/popup.ts`,

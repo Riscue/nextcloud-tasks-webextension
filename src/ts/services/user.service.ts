@@ -15,7 +15,7 @@ export class UserService extends Service {
             this.storageService.save(StorageService.USERNAME, username);
             this.storageService.save(StorageService.PASSWORD, password);
             this.storageService.save(StorageService.SERVER_URL, serverUrl);
-            const response = await this.apiService.get(
+            const response: any = await this.apiService.get(
                 '/ocs/v2.php/core/getapppassword',
                 {username, password},
                 {headers: {'OCS-APIRequest': true}}

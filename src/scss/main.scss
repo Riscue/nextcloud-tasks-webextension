@@ -1,3 +1,39 @@
+html, body {
+  overflow: overlay;
+}
+
+body.popup {
+  & {
+    min-width: 500px;
+    height: 600px;
+  }
+
+  div.container,
+  div#vue-container {
+    width: 100vw;
+    height: 100vh;
+  }
+}
+
 div.div-placeholder:before {
   content: '\00a0\00a0';
+  display: inline-block;
+  width: 0;
+}
+
+div.div-placeholder {
+  height: 30px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.md-scrollbar {
+  overflow: auto;
+}
+
+.md-menu-content {
+  display: unset !important;
+  flex-direction: unset !important;
 }

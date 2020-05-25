@@ -60,17 +60,6 @@
         "page": "html/options.html"
     },
     "content_security_policy": "script-src 'self' 'wasm-eval' 'unsafe-eval'; object-src 'self'",
-    "content_scripts" : [
-        {
-            "matches": [
-                "http://*/*",
-                "https://*/*"
-            ],
-            "js"     : [
-                "js/client.js"
-            ]
-        }
-    ],
     "permissions"     : [
         "*://*/*",
         "tabs",

@@ -1,13 +1,17 @@
 .md-list-item-text {
   .md-chip {
-    line-height: 26px;
-    width: unset;
-    font-size: 12px !important;
+    margin: 4px 0 0;
   }
 }
 
 .md-chip {
+  width: unset !important;
   height: 26px !important;
+
+  .md-ripple {
+    font-size: 12px !important;
+    line-height: 26px !important;
+  }
 }
 
 .completed {
@@ -18,11 +22,32 @@
   min-height: 60px;
 }
 
-.md-list-item-text .md-chip {
-  margin: 4px 0 0 !important;
-  cursor: pointer;
-}
-
 .md-list {
   padding: 0 !important;
+}
+
+.md-toolbar {
+  &.fixed {
+    position: fixed;
+    top: 0;
+    z-index: 9;
+  }
+
+  &.md-primary {
+    *,
+    input::placeholder {
+      color: white !important;
+      -webkit-text-fill-color: white !important;
+    }
+  }
+}
+
+.md-content {
+  position: relative;
+  top: 64px;
+  max-height: calc(100vh - 64px);
+}
+
+.md-field.md-theme-default:after {
+  background-color: rgba(255, 255, 255, 0.42) !important;
 }

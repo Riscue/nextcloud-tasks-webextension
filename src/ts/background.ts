@@ -4,15 +4,18 @@ import {StorageService} from '@ts/services/storage.service';
 import {DavService} from '@ts/services/dav.service';
 import {PromiseService} from '@ts/services/promise.service';
 import {BrowserApi} from '@tsP/browser-api';
+import {CalendarItemHelper} from '@ts/helpers/calendar-item.helper';
+import {CalendarItem} from '@ts/typings/types';
 
 export class Background {
 
-    calendarItems;
+    private calendarItems;
 
     private userService: UserService;
     private storageService: StorageService;
     private davService: DavService;
     private promiseService: PromiseService;
+    private initialized = false;
 
     init() {
         ContextHelper.buildContext();
@@ -35,8 +38,9 @@ export class Background {
         this.promiseService.bind(this).then(this.davService.discover(), (principal) => {
             this.promiseService.bind(this).then(this.davService.calendarHomeSet(principal), (calendarHome) => {
                 this.promiseService.bind(this).then(this.davService.calendarData(calendarHome), (result) => {
-                    this.promiseService.bind(this).then(this.davService.downloadCalendar(result.href), (calendarItems) => {
-                        this.calendarItems = calendarItems;
+                    this.promiseService.bind(this).then(this.davService.downloadCalendar(result.href), (calendarItems: CalendarItem[]) => {
+                        this.calendarItems = CalendarItemHelper.preprocess(calendarItems);
+                        this.initialized = true;
                     });
                 });
             });
@@ -57,18 +61,26 @@ export class Background {
     private async processMessage(type, data) {
         switch (type) {
             case 'calendaritems.get':
-                return this.calendarItems;
+                return {
+                    success: this.initialized,
+                    data: this.calendarItems
+                };
             case 'options.getForm':
                 return {
-                    username: this.storageService.get(StorageService.USERNAME),
-                    password: !!this.storageService.get(StorageService.PASSWORD) ? '****************' : null,
-                    serverUrl: this.storageService.get(StorageService.SERVER_URL)
+                    success: true,
+                    data: {
+                        username: this.storageService.get(StorageService.USERNAME),
+                        password: !!this.storageService.get(StorageService.PASSWORD) ? '****************' : null,
+                        serverUrl: this.storageService.get(StorageService.SERVER_URL)
+                    }
                 };
             case 'options.login':
                 const password = data.password === '****************' ? this.storageService.get(StorageService.PASSWORD) : data.password;
                 await this.userService.login(data.username, password, data.serverUrl);
                 this.fetchCalendar();
-                return true;
+                return {
+                    success: true
+                };
         }
     }
 }

@@ -121,7 +121,6 @@ export default (env: any = {}): Configuration => {
         mode    : production ? 'production' : 'development',
         devtool : production ? false : 'inline-source-map',
         entry   : {
-            client          : `${__dirname}/src/ts/client.ts`,
             popup           : `${__dirname}/src/ts/popup.ts`,
             options         : `${__dirname}/src/ts/options.ts`,
             background      : `${__dirname}/src/ts/background.ts`,

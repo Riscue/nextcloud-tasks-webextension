@@ -1,27 +1,73 @@
-<div>
-    <div v-if="!initialized">
-        Loading
-    </div>
-    <div v-if="initialized">
-        <div v-if="!calendarItems">
-            <md-button id="openSetting" type="button" class="md-primary md-raised" @click="openSettings">
-                {{ openSettingsWindowButton }}
-            </md-button>
+<div class="container">
+    <div class="loading-content" v-if="!initialized">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
         </div>
+    </div>
+    <div class="content" v-if="initialized">
+        <md-toolbar class="md-primary fixed" md-elevation="6">
+            <md-button class="md-icon-button">
+                <md-icon>menu</md-icon>
+            </md-button>
 
-        <md-list v-if="!!calendarItems" class="md-double-line">
+            <md-chips
+                    class="shake-on-error"
+                    style="flex: 1"
+                    v-model="selectedCategories"
+                    md-placeholder="Filter Categories..."
+                    @md-delete="clickCategory"
+                    @md-insert="clickCategory"
+            ></md-chips>
 
-            <div v-for="calendarItem in calendarItems" :key="calendarItem.ics.uuid">
-                <md-list-item>
-                    <div class="md-list-item-text">
-                        <span :class="{ 'completed': calendarItem.ics.completed }">{{calendarItem.ics.summary}}</span>
-                        <div class="div-placeholder" v-if="!calendarItem.ics.categories"></div>
-                        <md-chip v-for="chip in calendarItem.ics.categories" :key="chip">{{ chip }}</md-chip>
-                    </div>
-                </md-list-item>
+            <md-button class="md-icon-button" @click="refreshAll">
+                <md-icon>refresh</md-icon>
+            </md-button>
 
-                <md-divider></md-divider>
+            <md-menu md-align-trigger>
+                <md-button class="md-icon-button">
+                    <md-icon md-menu-trigger>more_vert</md-icon>
+                </md-button>
+
+                <md-menu-content>
+                    <md-menu-item class="pointer" @click="showCompleted = !showCompleted">
+                        <span v-if="showCompleted">Hide Completed Tasks</span>
+                        <span v-else>Show Completed Tasks</span>
+                    </md-menu-item>
+
+                    <md-menu-item class="pointer" @click="openSettings">
+                        <span>Open Settings</span>
+                    </md-menu-item>
+
+                </md-menu-content>
+            </md-menu>
+        </md-toolbar>
+
+        <md-content class="md-scrollbar">
+            <div v-if="!calendarItems.length">
+                No Result
             </div>
-        </md-list>
+            <md-list v-if="!!calendarItems" class="md-double-line">
+
+                <div v-for="calendarItem in calendarItems" :key="calendarItem.ics.uuid">
+                    <md-list-item>
+                        <div class="md-list-item-text">
+                            <span :class="{ 'completed': calendarItem.ics.completed }">{{calendarItem.ics.summary}}</span>
+                            <div class="div-placeholder">
+                                <md-chip
+                                        md-clickable
+                                        v-for="category in calendarItem.ics.categories"
+                                        :key="calendarItem.ics.uuid"
+                                        @click="clickCategory(category)">
+                                    {{ category }}
+                                </md-chip>
+                            </div>
+                        </div>
+                    </md-list-item>
+
+                    <md-divider></md-divider>
+                </div>
+            </md-list>
+        </md-content>
     </div>
 </div>

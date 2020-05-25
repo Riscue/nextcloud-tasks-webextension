@@ -1,4 +1,4 @@
 declare module '*.json' {
-    const content: any;
+    const content: object;
     export default content;
 }

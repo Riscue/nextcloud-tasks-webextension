@@ -2,7 +2,7 @@ import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import {validationMixin} from 'vuelidate';
 import {required} from 'vuelidate/lib/validators';
-import {Validations} from 'ts/typings/validations';
+import {Validations} from 'ts/typings/types';
 import {BrowserApi} from '@tsP/browser-api';
 import template from './options.component.html'
 import style from './options.component.scss'
@@ -56,9 +56,9 @@ export default class OptionsComponent extends Vue {
     initializeForm() {
         BrowserApi.getBrowserApi().runtime.sendMessage({type: 'options.getForm'}).then((response) => {
             this.form = {
-                username: response.username,
-                password: response.password,
-                serverUrl: response.serverUrl
+                username: response.data.username,
+                password: response.data.password,
+                serverUrl: response.data.serverUrl
             };
         });
     }
@@ -72,7 +72,7 @@ export default class OptionsComponent extends Vue {
             serverUrl: this.form.serverUrl
         };
         BrowserApi.getBrowserApi().runtime.sendMessage({type: 'options.login', data}).then((response) => {
-            if (response) {
+            if (response.success) {
                 this.loading = false;
                 this.settingsSaved = true;
             }

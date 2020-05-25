@@ -1,3 +1,4 @@
+import {AxiosResponse} from 'axios';
 import {StorageService} from '@ts/services/storage.service';
 import {ApiService} from '@ts/services/api.service';
 import {AuthenticationError} from '@ts/errors/authentication.error';
@@ -15,7 +16,7 @@ export class UserService extends Service {
             this.storageService.save(StorageService.USERNAME, username);
             this.storageService.save(StorageService.PASSWORD, password);
             this.storageService.save(StorageService.SERVER_URL, serverUrl);
-            const response: any = await this.apiService.get(
+            const response: AxiosResponse = await this.apiService.get(
                 '/ocs/v2.php/core/getapppassword',
                 {username, password},
                 {headers: {'OCS-APIRequest': true}}

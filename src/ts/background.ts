@@ -16,6 +16,7 @@ export class Background {
     private davService: DavService;
     private promiseService: PromiseService;
     private initialized = false;
+    private calendarData: any;
 
     init() {
         ContextHelper.buildContext();
@@ -38,12 +39,17 @@ export class Background {
         this.promiseService.bind(this).then(this.davService.discover(), (principal) => {
             this.promiseService.bind(this).then(this.davService.calendarHomeSet(principal), (calendarHome) => {
                 this.promiseService.bind(this).then(this.davService.calendarData(calendarHome), (result) => {
-                    this.promiseService.bind(this).then(this.davService.downloadCalendar(result.href), (calendarItems: CalendarItem[]) => {
-                        this.calendarItems = CalendarItemHelper.preprocess(calendarItems);
-                        this.initialized = true;
-                    });
+                    this.calendarData = result;
+                    this.downloadCalendar();
                 });
             });
+        });
+    }
+
+    private downloadCalendar() {
+        this.promiseService.bind(this).then(this.davService.downloadCalendar(this.calendarData.href), (calendarItems: CalendarItem[]) => {
+            this.calendarItems = CalendarItemHelper.preprocess(calendarItems);
+            this.initialized = true;
         });
     }
 
@@ -60,6 +66,11 @@ export class Background {
 
     private async processMessage(type, data) {
         switch (type) {
+            case 'calendaritems.refresh':
+                this.downloadCalendar();
+                return {
+                    success: true
+                };
             case 'calendaritems.get':
                 return {
                     success: this.initialized,

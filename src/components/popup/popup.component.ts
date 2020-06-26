@@ -69,7 +69,11 @@ export default class PopupComponent extends Vue {
         this.filterOptions = [
             {key: 'status', value: 'COMPLETED', not: true}
         ];
-        this.initialize();
+
+        BrowserApi.getBrowserApi().runtime.sendMessage({type: 'calendaritems.refresh'}).then((response) => {
+            console.log(response);
+            this.initialize();
+        });
     }
 
     openSettings() {

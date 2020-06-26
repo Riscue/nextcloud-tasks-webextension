@@ -4,8 +4,6 @@ All contributions are welcome.
 
 Please open an issue before pull requests.
 
-Please make sure to update tests as appropriate.
-
 Github guide for contributing:
 
 - [Contributing to a project](https://guides.github.com/activities/forking/)

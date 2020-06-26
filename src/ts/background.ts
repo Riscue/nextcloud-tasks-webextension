@@ -48,7 +48,7 @@ export class Background {
 
     private downloadCalendar() {
         this.promiseService.bind(this).then(this.davService.downloadCalendar(this.calendarData.href), (calendarItems: CalendarItem[]) => {
-            this.calendarItems = CalendarItemHelper.preprocess(calendarItems);
+            this.calendarItems = CalendarItemHelper.preProcess(calendarItems);
             this.initialized = true;
         });
     }
@@ -67,6 +67,8 @@ export class Background {
     private async processMessage(type, data) {
         switch (type) {
             case 'calendaritems.refresh':
+                this.calendarItems = undefined;
+                this.initialized = false;
                 this.downloadCalendar();
                 return {
                     success: true

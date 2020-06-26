@@ -2,11 +2,14 @@ import {CalendarItem, FilterOption} from '@ts/typings/types';
 
 export class CalendarItemHelper {
 
-    static preprocess(items: CalendarItem[]): CalendarItem[] {
+    static preProcess(items: CalendarItem[]): CalendarItem[] {
         items.forEach(item => {
             Object.keys(item.ics).forEach(key => {
-                if (!!item.ics[key].toUnixTime) {
-                    item.ics[key] = item.ics[key].toUnixTime();
+                if (!!item.ics[key].toJSDate) {
+                    item.ics[key].unixTime = item.ics[key].toJSDate().getTime();
+                }
+                if (!!item.ics[key].toJSON) {
+                    item.ics[key].toJSON = this.toJSONFactory(item.ics[key]);
                 }
             });
         });
@@ -33,7 +36,41 @@ export class CalendarItemHelper {
 
     static sort(field: string) {
         return (a, b) => {
-            return (a.ics[field] || Number.MAX_SAFE_INTEGER) - (b.ics[field] || Number.MAX_SAFE_INTEGER);
+            const A = a.ics.hasOwnProperty(field) ? a.ics[field].unixTime : Number.MAX_SAFE_INTEGER;
+            const B = b.ics.hasOwnProperty(field) ? b.ics[field].unixTime : Number.MAX_SAFE_INTEGER;
+            return A - B;
+        };
+    }
+
+    static toJSONFactory(that) {
+        return () => {
+            const copy = [
+                'year',
+                'month',
+                'day',
+                'hour',
+                'minute',
+                'second',
+                'isDate',
+                'unixTime'
+            ];
+
+            const result = Object.create(null);
+
+            let i = 0;
+            const len = copy.length;
+            let prop;
+
+            for (; i < len; i++) {
+                prop = copy[i];
+                result[prop] = that[prop];
+            }
+
+            if (that.zone) {
+                result.timezone = that.zone.tzid;
+            }
+
+            return result;
         };
     }
 }

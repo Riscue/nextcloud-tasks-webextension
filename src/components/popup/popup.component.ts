@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
+import moment from 'moment';
 import {BrowserApi} from '@tsP/browser-api';
 import {CalendarItemHelper} from '@ts/helpers/calendar-item.helper';
 import {CalendarItem, FilterOption} from '@ts/typings/types';
@@ -71,7 +72,6 @@ export default class PopupComponent extends Vue {
         ];
 
         BrowserApi.getBrowserApi().runtime.sendMessage({type: 'calendaritems.refresh'}).then((response) => {
-            console.log(response);
             this.initialize();
         });
     }
@@ -81,9 +81,18 @@ export default class PopupComponent extends Vue {
         window.close();
     }
 
+    isPassed(value) {
+        const time = value.completed || value.due;
+        return new Date() > new Date(time ? time.unixTime : Number.MAX_SAFE_INTEGER);
+    }
+
+    prettyTime(value) {
+        const time = value.completed || value.due;
+        return time ? this.timeSince(time) : '';
+    }
+
     private initialize() {
         BrowserApi.getBrowserApi().runtime.sendMessage({type: 'calendaritems.get'}).then((response) => {
-            console.log(response);
             this._calendarItems = response.data;
             this.initialized = response.success;
 
@@ -91,5 +100,11 @@ export default class PopupComponent extends Vue {
                 setTimeout(() => this.initialize(), 1000);
             }
         });
+    }
+
+    private timeSince(date) {
+        const dateArray = [date.year, date.month - 1, date.day];
+        const dateTimeArray = [date.year, date.month - 1, date.day, date.hour, date.minute, date.second];
+        return moment(date.isDate ? dateArray : dateTimeArray).fromNow();
     }
 }

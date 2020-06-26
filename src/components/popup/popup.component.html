@@ -50,9 +50,11 @@
             <md-list v-if="!!calendarItems" class="md-double-line">
 
                 <div v-for="calendarItem in calendarItems" :key="calendarItem.ics.uuid">
-                    <md-list-item>
+                    <md-list-item class="calendar-item">
                         <div class="md-list-item-text">
-                            <span :class="{ 'completed': calendarItem.ics.completed }">{{calendarItem.ics.summary}}</span>
+                            <span class="calendar-item-summary" :class="{ 'completed': calendarItem.ics.completed }">
+                                {{calendarItem.ics.summary}}
+                            </span>
                             <div class="div-placeholder">
                                 <md-chip
                                         md-clickable
@@ -61,6 +63,10 @@
                                         @click="clickCategory(category)">
                                     {{ category }}
                                 </md-chip>
+                            </div>
+                            <div class="calendar-item-time"
+                                 :class="{ 'passed': isPassed(calendarItem.ics), 'completed': calendarItem.ics.completed }">
+                                {{prettyTime(calendarItem.ics)}}
                             </div>
                         </div>
                     </md-list-item>

@@ -83,17 +83,22 @@ export default (env: any = {}): Configuration => {
                 }
             }
         ),
-        new CopyWebpackPlugin(
-            [
-                {
-                    from        : `src/platform/generic`,
-                    ignore      : ['**/ts/**'],
-                },
-                {
-                    from        : `src/platform/${platform}`,
-                    ignore      : ['**/ts/**'],
-                }
-            ]
+        new CopyWebpackPlugin({
+                patterns: [
+                    {
+                        from        : `src/platform/generic`,
+                        globOptions : {
+                            ignore  : ['**/ts/**'],
+                        }
+                    },
+                    {
+                        from        : `src/platform/${platform}`,
+                        globOptions : {
+                            ignore  : ['**/ts/**']
+                        }
+                    }
+                ]
+            }
         ),
         new MiniCssExtractPlugin({filename: 'css/[name].css'}),
         new CleanWebpackPlugin(

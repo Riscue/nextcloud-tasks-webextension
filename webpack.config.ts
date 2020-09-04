@@ -110,8 +110,7 @@ export default (env: any = {}): Configuration => {
         )
     ];
 
-    if (production) {
-    } else {
+    if (!production) {
         rules.push(
             {
                 test    : /\.ts$/,

@@ -5,7 +5,9 @@
   "private": true,
   "scripts": {
     "start": "webpack --progress --colors --watch",
-    "build": "webpack --progress --colors --env.production"
+    "build": "webpack --progress --colors --env.production",
+    "test": "ts-node -r tsconfig-paths/register node_modules/jasmine/bin/jasmine.js --config=jasmine.json",
+    "coverage": "nyc -r text -e .ts -x \"tests/*.test.ts\" npm run test"
   },
   "dependencies": {
     "awesome-typescript-loader": "^5.2.1",
@@ -36,11 +38,15 @@
   },
   "devDependencies": {
     "@types/copy-webpack-plugin": "^6.0.0",
+    "@types/jasmine": "^3.6.2",
     "@types/mini-css-extract-plugin": "^0.9.1",
     "@types/node": "^14.0.4",
     "@types/ua-parser-js": "^0.7.33",
     "@types/vuelidate": "^0.7.13",
     "@types/webpack": "^4.41.13",
+    "jasmine": "^3.6.3",
+    "nyc": "^15.1.0",
+    "tsconfig-paths": "^3.9.0",
     "tslint": "^6.1.2",
     "tslint-loader": "^3.5.4",
     "tslint-sonarts": "^1.9.0"

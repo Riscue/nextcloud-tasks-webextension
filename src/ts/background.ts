@@ -98,4 +98,6 @@ export class Background {
     }
 }
 
-new Background().init();
+if (BrowserApi.getBrowserApi().runtime) {
+    new Background().init();
+}

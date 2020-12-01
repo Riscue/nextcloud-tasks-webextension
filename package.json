@@ -7,7 +7,7 @@
     "start": "webpack --progress --colors --watch",
     "build": "webpack --progress --colors --env.production",
     "test": "ts-node -r tsconfig-paths/register node_modules/jasmine/bin/jasmine.js --config=jasmine.json",
-    "coverage": "nyc -r text -e .ts -x \"tests/*.test.ts\" npm run test"
+    "coverage": "nyc -r text -e .ts npm run test"
   },
   "dependencies": {
     "awesome-typescript-loader": "^5.2.1",
@@ -45,6 +45,7 @@
     "@types/vuelidate": "^0.7.13",
     "@types/webpack": "^4.41.13",
     "jasmine": "^3.6.3",
+    "localstorage-polyfill": "^1.0.1",
     "nyc": "^15.1.0",
     "tsconfig-paths": "^3.9.0",
     "tslint": "^6.1.2",

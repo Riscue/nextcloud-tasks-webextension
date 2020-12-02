@@ -9,6 +9,7 @@ out-tsc/
 ng/
 node/
 .nyc_output/
+.scannerwork/
 
 #Generator
 *.sh

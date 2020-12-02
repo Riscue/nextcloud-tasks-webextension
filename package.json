@@ -6,8 +6,12 @@
   "scripts": {
     "start": "webpack --progress --colors --watch",
     "build": "webpack --progress --colors --env.production",
+    "sonar": "sonar-scanner -Dsonar.host.url=${SONAR_URL} -Dsonar.login=${SECRET_SONAR_TOKEN} -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info -Dsonar.coverage.exclusions=**/*.spec.ts",
+    "bom": "npm run bom:generate && npm run bom:upload",
+    "bom:generate": "cyclonedx-bom",
+    "bom:upload": "dependency-track -u bom.xml --dependencyTrackBaseUrl ${DEPENDENCY_TRACK_URL} --apiKey ${SECRET_DEPENDENCY_TRACK_API_KEY} --projectName ${npm_package_name} --projectVersion ${npm_package_version}",
     "test": "ts-node -r tsconfig-paths/register node_modules/jasmine/bin/jasmine.js --config=jasmine.json",
-    "coverage": "nyc -r text -e .ts npm run test"
+    "coverage": "nyc -r text -r lcov npm run test"
   },
   "dependencies": {
     "awesome-typescript-loader": "^5.2.1",
@@ -37,6 +41,8 @@
     "webpack-cli": "^3.3.11"
   },
   "devDependencies": {
+    "@cyclonedx/bom": "^2.0.2",
+    "@dependency-track/bom": "^1.0.2",
     "@types/copy-webpack-plugin": "^6.0.0",
     "@types/jasmine": "^3.6.2",
     "@types/mini-css-extract-plugin": "^0.9.1",
@@ -47,6 +53,7 @@
     "jasmine": "^3.6.3",
     "localstorage-polyfill": "^1.0.1",
     "nyc": "^15.1.0",
+    "sonarqube-scanner": "^2.8.0",
     "tsconfig-paths": "^3.9.0",
     "tslint": "^6.1.2",
     "tslint-loader": "^3.5.4",

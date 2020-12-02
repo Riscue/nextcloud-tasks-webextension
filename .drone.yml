@@ -10,3 +10,4 @@ steps:
     commands:
       - npm install
       - npm run coverage
+      - npm run sonar

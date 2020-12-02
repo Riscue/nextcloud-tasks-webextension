@@ -4,7 +4,7 @@ name: default
 
 steps:
   - name: Test
-    image: node:12-alpine
+    image: node:12
     environment:
       NODE_ENV: development
     commands:

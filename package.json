@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack --progress --colors --watch",
     "build": "webpack --progress --colors --env.production",
-    "sonar": "sonar-scanner -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=${SONAR_TOKEN} -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info -Dsonar.coverage.exclusions=**/*.spec.ts",
+    "sonar": "sonar-scanner -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=${SONAR_TOKEN} -Dsonar.organization=riscue -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info -Dsonar.coverage.exclusions=**/*.spec.ts",
     "bom": "npm run bom:generate && npm run bom:upload",
     "bom:generate": "cyclonedx-bom",
     "bom:upload": "dependency-track -u bom.xml --dependencyTrackBaseUrl ${DEPENDENCY_TRACK_URL} --apiKey ${SECRET_DEPENDENCY_TRACK_API_KEY} --projectName ${npm_package_name} --projectVersion ${npm_package_version}",

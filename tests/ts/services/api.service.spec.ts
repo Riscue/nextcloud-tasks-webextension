@@ -1,7 +1,7 @@
 /* tslint:disable:no-string-literal */
 import {StorageService} from '@ts/services/storage.service';
 import {ApiService} from '@ts/services/api.service';
-import {AxiosRequestConfig} from 'axios';
+import {AxiosRequestConfig, Method} from 'axios';
 
 describe('Test Api Service', () => {
     const mockStorageService = new StorageService();
@@ -12,7 +12,12 @@ describe('Test Api Service', () => {
     const mockPassword = 'mockPassword';
     const mockAuth = {username: 'mockUsername', password: mockPassword}
     const mockConfig: AxiosRequestConfig = {baseURL: 'mockBaseUrl'};
-    const result = {method: 'GET', url: `mockStorageServiceValue${mockUrl}`, auth: mockAuth, ...mockConfig};
+    const result: AxiosRequestConfig = {
+        method: 'GET',
+        url: `mockStorageServiceValue${mockUrl}`,
+        auth: mockAuth,
+        ...mockConfig
+    };
 
     beforeEach(() => {
         spyOn(StorageService.prototype, 'get').and.returnValue('mockStorageServiceValue');
@@ -27,13 +32,13 @@ describe('Test Api Service', () => {
     })
 
     it('propfind()', () => {
-        result.method = 'PROPFIND';
+        result.method = 'PROPFIND' as Method;
         result.data = mockData;
         apiService.propfind(mockUrl, mockData, mockAuth, mockConfig);
     });
 
     it('report()', () => {
-        result.method = 'REPORT';
+        result.method = 'REPORT' as Method;
         result.data = mockData;
         apiService.report(mockUrl, mockData, mockAuth, mockConfig);
     });

@@ -8,7 +8,12 @@ describe('Test Service', () => {
     const mockPassword = 'mockPassword';
     const mockAuth = {username: 'mockUsername', password: mockPassword}
     const mockConfig: AxiosRequestConfig = {baseURL: 'mockBaseUrl'};
-    const result = {method: 'GET', url: `mockStorageServiceValue${mockUrl}`, auth: mockAuth, ...mockConfig};
+    const result: AxiosRequestConfig = {
+        method: 'GET',
+        url: `mockStorageServiceValue${mockUrl}`,
+        auth: mockAuth,
+        ...mockConfig
+    };
 
     const mockStorageService = new StorageService();
     const apiService: ApiService = new ApiService(mockStorageService);

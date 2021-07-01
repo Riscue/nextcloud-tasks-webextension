@@ -41,7 +41,7 @@
     "webpack-cli": "^4.2.0"
   },
   "devDependencies": {
-    "@cyclonedx/bom": "^2.0.2",
+    "@cyclonedx/bom": "^3.0.0",
     "@dependency-track/bom": "^1.0.2",
     "@types/copy-webpack-plugin": "^6.0.0",
     "@types/jasmine": "^3.6.2",

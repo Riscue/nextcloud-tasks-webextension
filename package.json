@@ -18,7 +18,7 @@
     "axios": "^0.21.0",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^8.1.0",
-    "css-loader": "^5.0.1",
+    "css-loader": "^6.2.0",
     "file-loader": "^6.0.0",
     "ical.js": "^1.4.0",
     "jquery": "^3.5.1",

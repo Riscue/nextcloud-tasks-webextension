@@ -1,0 +1,24 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: "@types/node"
+    versions:
+    - 15.0.0
+  - dependency-name: copy-webpack-plugin
+    versions:
+    - 8.0.0
+  - dependency-name: typescript
+    versions:
+    - 4.1.5
+    - 4.2.2
+  - dependency-name: sass-loader
+    versions:
+    - 11.0.0
+  - dependency-name: webextension-polyfill-ts
+    versions:
+    - 0.24.0

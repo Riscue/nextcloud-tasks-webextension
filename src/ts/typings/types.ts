@@ -19,3 +19,9 @@ export type CalendarItem = {
     ics: any,
     ETag: string
 };
+
+export type CalendarResponse = {
+    hrefs: string[],
+    displayName: string,
+    CTag: string
+};

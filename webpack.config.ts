@@ -32,7 +32,7 @@ export default (env: any = {}): Configuration => {
         {
             test    : /\.ts$/,
             exclude : /node_modules/,
-            loader  : 'awesome-typescript-loader',
+            loader  : 'ts-loader',
             options :{
                 transpileOnly: production
             }
@@ -49,7 +49,12 @@ export default (env: any = {}): Configuration => {
             test    : /\.scss$/,
             use     : [
                 'vue-style-loader',
-                MiniCssExtractPlugin.loader,
+                {
+                    loader  : MiniCssExtractPlugin.loader,
+                    options : {
+                        esModule    : false
+                    }
+                },
                 'css-loader',
                 {
                     loader  : 'sass-loader',

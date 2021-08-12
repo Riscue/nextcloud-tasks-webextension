@@ -5,18 +5,18 @@ import {DavService} from '@ts/services/dav.service';
 import {PromiseService} from '@ts/services/promise.service';
 import {BrowserApi} from '@tsP/browser-api';
 import {CalendarItemHelper} from '@ts/helpers/calendar-item.helper';
-import {CalendarItem} from '@ts/typings/types';
+import {CalendarItem, CalendarResponse} from '@ts/typings/types';
 
 export class Background {
 
-    private calendarItems;
+    private calendarItems = [];
 
     private userService: UserService;
     private storageService: StorageService;
     private davService: DavService;
     private promiseService: PromiseService;
     private initialized = false;
-    private calendarData: any;
+    private calendarData: CalendarResponse;
 
     init() {
         ContextHelper.buildContext();
@@ -47,10 +47,13 @@ export class Background {
     }
 
     private downloadCalendar() {
-        this.promiseService.bind(this).then(this.davService.downloadCalendar(this.calendarData.href), (calendarItems: CalendarItem[]) => {
-            this.calendarItems = CalendarItemHelper.preProcess(calendarItems);
-            this.initialized = true;
-        });
+        const calendars = this.calendarData.hrefs;
+        calendars.forEach(calendar => {
+            this.promiseService.bind(this).then(this.davService.downloadCalendar(calendar), (calendarItems: CalendarItem[]) => {
+                this.calendarItems = [...CalendarItemHelper.preProcess(calendarItems), ...this.calendarItems];
+                this.initialized = true;
+            });
+        })
     }
 
     private receiveMessage(message, sender = null) {
@@ -67,7 +70,7 @@ export class Background {
     private async processMessage(type, data) {
         switch (type) {
             case 'calendaritems.refresh':
-                this.calendarItems = undefined;
+                this.calendarItems = [];
                 this.initialized = false;
                 this.downloadCalendar();
                 return {

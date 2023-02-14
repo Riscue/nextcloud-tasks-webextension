@@ -14,7 +14,7 @@
     "coverage": "nyc -r text -r lcov npm run test"
   },
   "dependencies": {
-    "axios": "^0.21.0",
+    "axios": "^0.27.2",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
     "copy-webpack-plugin": "^9.0.1",
     "css-loader": "^6.2.0",
